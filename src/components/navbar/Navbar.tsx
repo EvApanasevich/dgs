@@ -8,7 +8,7 @@ import { getServerSession } from "next-auth/next"
 
 const navItems = [
    { label: 'Обзор', href: '/review' },
-   { label: 'Детально', href: '/indetail' },
+   { label: 'Детально', href: '/indetail/1' },
    { label: 'Тренды', href: '/trends' },
    { label: 'Сообщения', href: '/messages' },
    { label: 'Настройки', href: '/settings' }
@@ -38,10 +38,10 @@ export async function Navbar() {
                </div>
                <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start text-gray-300">
                   <Logo />
-                  profile of {session?.user?.name}
+                  {/* profile of {session?.user?.name} */}
                   <div className="hidden sm:ml-6 sm:block">
                      <div className="flex space-x-4">
-                        <Navigation navLinks={navItems} />
+                        <Navigation />
                      </div>
                   </div>
                </div>

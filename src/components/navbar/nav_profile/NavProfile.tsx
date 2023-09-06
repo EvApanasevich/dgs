@@ -25,7 +25,7 @@ export function NavProfile() {
 
             {session?.data ?
                <span><Link href="#" onClick={() => signOut({ callbackUrl: "/" })} className="text-gray-300 leading-8">Sign out</Link></span> :
-               <span><Link href="api/auth/signin" className="text-gray-300 leading-8">Sign in</Link></span>}
+               <span><Link href="/signin" className="text-gray-300 leading-8">Sign in</Link></span>}
          </div>
 
          <NavProfileMenu isOpen={isOpenProfMenu} setIsOpen={setIsOpenProfMenu} />

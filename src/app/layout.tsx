@@ -20,7 +20,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                <header>
                   <Navbar />
                </header>
-               <main className="container mx-auto flex min-h-screen flex-col items-center justify-between p-24">
+               <main className="container mx-auto flex min-h-screen flex-col items-center">
                   {children}
                </main>
                <footer>
