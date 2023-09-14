@@ -41,7 +41,6 @@ export const devicesApi = {
          return arrDevices
 
       } catch (e) {
-         console.log(e)
       }
    },
    async getDevice(id: number) {
@@ -59,8 +58,7 @@ export const devicesApi = {
          return await responseDeviceProperties.json();
 
       } catch (error) {
-         if (error)
-            console.log('from One device', error)
+
       }
    }
 }

@@ -7,8 +7,7 @@ import { ViewBlock } from "@/components/view_block/ViewBlock";
 export default async function ObjectInDetail({ params }: { params: { id: number } }) {
 
    const device = await devicesApi.getDevice(params.id)
-   console.log(device)
-
+   
    const getSensors = () => {
       let arrSensors = [];
       for (let id in device.sensors) {
