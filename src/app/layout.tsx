@@ -17,7 +17,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <html lang="en">
          <body className={inter.className}>
             <AppProvider>
-               <header>
+               <header className="sticky top-0 z-[100]">
                   <Navbar />
                </header>
                <main className="container mx-auto flex min-h-screen flex-col items-center">

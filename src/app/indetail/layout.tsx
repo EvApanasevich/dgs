@@ -1,12 +1,15 @@
-import { dgses } from "../review/page";
+import { devicesApi } from "../api/devices/api_devices";
+import { DeviceType } from "../review/page";
 import { ObjectList } from "./ObjectList";
 
-export default function InDetailLayout({ children }: { children: React.ReactNode }) {
+export default async function InDetailLayout({ children }: { children: React.ReactNode }) {
+
+   const devices: DeviceType[] | undefined = await devicesApi.getDevices()
 
    return (
-      <>
-         <ObjectList dgses={dgses} />
+      <div>
+         <ObjectList devices={devices} />
          {children}
-      </>
+      </div>
    )
 }
