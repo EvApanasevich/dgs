@@ -36,7 +36,7 @@ export default async function ObjectInDetail({ params }: { params: { id: number 
          <div className="grid grid-cols-2 gap-4 p-5">
             <ViewBlock title={'питание объекта'} borderColor={'border-lime-500'}>
                <div className="flex gap-4">
-                  <HomeSvg color={`${'#84cc16'}`} />
+                  {/* <HomeSvg color={`${'#84cc16'}`} /> */}
                   <span>
                      Питание от основной сети
                   </span>
@@ -44,7 +44,7 @@ export default async function ObjectInDetail({ params }: { params: { id: number 
             </ViewBlock>
             <ViewBlock title={'резервное электроснабжение'} borderColor={device.lon > 27 ? 'border-lime-500' : 'border-red-500'}>
                <div className="flex gap-4">
-                  <GeneratorSvg color={device.lon > 27 ? '#84cc16' : '#ef4444'} />
+                  {/* <GeneratorSvg color={device.lon > 27 ? '#84cc16' : '#ef4444'} /> */}
                   <span>
                      {device.lon > 27 ? 'Резервный источник готов к пуску' : 'Резервный источник не готов к пуску'}
                   </span>
