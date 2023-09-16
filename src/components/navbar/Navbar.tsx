@@ -3,7 +3,7 @@ import { Logo } from "./logo/Logo"
 import { NavProfile } from "./nav_profile/NavProfile"
 import { Navigation } from "./navigation/Navigation"
 ///////////////////////////////////////
-//import { getServerSession } from "next-auth/next"
+import { getServerSession } from "next-auth/next"
 //////////////////////////////////////
 
 const navItems = [
@@ -15,7 +15,7 @@ const navItems = [
 ]
 
 export async function Navbar() {
-   // const session = await getServerSession(authConfig)
+   const session = await getServerSession(authConfig)
 
    return (
       <nav className="bg-gray-800">
