@@ -1,6 +1,6 @@
 export default function Settings() {
    return (
-      <div>
+      <div className="text-2xl pt-28">
          Settings Page
       </div>
    )
