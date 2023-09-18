@@ -11,7 +11,7 @@ export function NavProfile() {
 
    const { isOpenProfMenu, setIsOpenProfMenu } = useContext(InteractiveContext)
    const session = useSession()
-
+   
    return (
       <>
          <div className="flex">

@@ -29,7 +29,7 @@ export function SensorItem({ id, name, rate, value }: SensorItemPropsType) {
             {name}
          </div>
          <div className="mx-auto">
-            {/* <SensorSvg color={isActiveSensor(name) ? '#84cc16' : '#d1d5db'} /> */}
+            <SensorSvg color={isActiveSensor(name) ? '#84cc16' : '#d1d5db'} />
          </div>
          <div className="text-[0.8rem] pt-2">
             {value === null ? 0 : value.includes('.') ? Number(value).toFixed(2) : value}

@@ -1,6 +1,6 @@
 import type { AuthOptions } from "next-auth";
 import GoogleProvider from 'next-auth/providers/google'
-import Credentials from 'next-auth/providers/credentials'
+import CredentialsProvider from 'next-auth/providers/credentials'
 import { User } from "next-auth";
 import { authApi } from "@/app/api/devices/api_devices";
 
@@ -10,7 +10,7 @@ export const authConfig: AuthOptions = {
       //    clientId: '',
       //    clientSecret: '',
       // })
-      Credentials({
+      CredentialsProvider({
          credentials: {
             email: { label: 'email', type: 'email', required: true },
             password: { label: 'password', type: 'password', required: true },
@@ -19,17 +19,28 @@ export const authConfig: AuthOptions = {
          async authorize(credantials) {
             if (!credantials?.email || !credantials?.password) return null
 
-            const user = await authApi.authorize(credantials)
+            const res = await authApi.authorize(credantials)
+
+            const user = { ...res.user, token: res.token }
 
             if (user) {
-               return user.user as User
+               return user as User
             }
-            
+
             return null
          }
       })
    ],
    pages: {
       signIn: '/signin'
+   },
+   callbacks: {
+      async jwt({ token, user }) {
+         return {...token, ...user}
+      },
+      async session({ session, token, user }) {
+         session.user = token as any;
+         return session;
+      }
    },
 }

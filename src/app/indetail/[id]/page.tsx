@@ -3,11 +3,14 @@ import { GeneratorSvg } from "@/components/icons_svg/GeneratorSvg";
 import { HomeSvg } from "@/components/icons_svg/HomeSvg";
 import { SensorItem } from "@/components/sensor/SensorItem";
 import { ViewBlock } from "@/components/view_block/ViewBlock";
+import { getServerSession } from "next-auth/next";
+import { authConfig } from "../../../../configs/auth";
 
 export default async function ObjectInDetail({ params }: { params: { id: number } }) {
 
-   const device = await devicesApi.getDevice(params.id)
-   
+   const session = await getServerSession(authConfig)
+   const device = await devicesApi.getDevice(params.id, session?.user.token)
+
    const getSensors = () => {
       let arrSensors = [];
       for (let id in device.sensors) {
@@ -36,7 +39,7 @@ export default async function ObjectInDetail({ params }: { params: { id: number 
          <div className="grid grid-cols-2 gap-4 p-5">
             <ViewBlock title={'питание объекта'} borderColor={'border-lime-500'}>
                <div className="flex gap-4">
-                  {/* <HomeSvg color={`${'#84cc16'}`} /> */}
+                  <HomeSvg color={`${'#84cc16'}`} />
                   <span>
                      Питание от основной сети
                   </span>
@@ -44,7 +47,7 @@ export default async function ObjectInDetail({ params }: { params: { id: number 
             </ViewBlock>
             <ViewBlock title={'резервное электроснабжение'} borderColor={device.lon > 27 ? 'border-lime-500' : 'border-red-500'}>
                <div className="flex gap-4">
-                  {/* <GeneratorSvg color={device.lon > 27 ? '#84cc16' : '#ef4444'} /> */}
+                  <GeneratorSvg color={device.lon > 27 ? '#84cc16' : '#ef4444'} />
                   <span>
                      {device.lon > 27 ? 'Резервный источник готов к пуску' : 'Резервный источник не готов к пуску'}
                   </span>

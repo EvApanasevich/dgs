@@ -1,5 +1,7 @@
 import { DgsItem } from "@/components/dgs_item/DgsItem";
 import { devicesApi } from "../api/devices/api_devices";
+import { getServerSession } from "next-auth/next"
+import { authConfig } from "../../../configs/auth";
 
 export type DeviceType = {
    id: number
@@ -11,7 +13,8 @@ export type DeviceType = {
 
 export default async function Review() {
 
-   const devices = await devicesApi.getDevices()
+   const session = await getServerSession(authConfig)
+   const devices = await devicesApi.getDevices(session?.user.token)
 
    return (
       <div>

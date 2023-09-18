@@ -23,9 +23,9 @@ export function DgsItem({ deviceId, deviceName, reservPower, time }: DgsItemProp
 
             <div className="flex flex-col pt-5">
                <div className="mx-auto">
-                  {/* <HomeSvg color={`${reservPower === 'in_work' ? '#facc15' :
+                  <HomeSvg color={`${reservPower === 'in_work' ? '#facc15' :
                      reservPower === 'not_ready' || reservPower === 'ready' ? '#84cc16' : '#d1d5db'}`}
-                  /> */}
+                  />
                </div>
                <div className="px-3 py-2 text-center text-sm">{reservPower === 'in_work' ? 'Питание от ДГУ' :
                   'Питание от основной сети'}
@@ -34,8 +34,8 @@ export function DgsItem({ deviceId, deviceName, reservPower, time }: DgsItemProp
 
             <div className="flex flex-col pt-5">
                <div className="mx-auto">
-                  {/* <GeneratorSvg color={`${reservPower === 'in_work' ? '#facc15' :
-                     reservPower === 'not_ready' ? '#ef4444' : reservPower === 'ready' ? '#84cc16' : '#d1d5db'}`} /> */}
+                  <GeneratorSvg color={`${reservPower === 'in_work' ? '#facc15' :
+                     reservPower === 'not_ready' ? '#ef4444' : reservPower === 'ready' ? '#84cc16' : '#d1d5db'}`} />
                </div>
                <div className="px-3 py-2 text-center text-sm">Резервный источник {reservPower === 'in_work' ? 'находится в работе' :
                   reservPower === 'ready' ? 'готов к пуску' :

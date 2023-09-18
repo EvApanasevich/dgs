@@ -15,19 +15,17 @@ export const authApi = {
       })
       const user = await response.json();
 
-      process.env.TOKEN = user.token;
-
       return user
    }
 }
 
 export const devicesApi = {
-   async getDevices() {
+   async getDevices(token: string | undefined) {
       try {
          let responseDevices = await fetch("http://api.mechatronics.by/api/3/get_devices", {
             method: 'POST',
             headers: {
-               'authorization': `Bearer ${process.env.TOKEN}`
+               'authorization': `Bearer ${token}`
             },
             redirect: 'follow'
          })
@@ -43,13 +41,13 @@ export const devicesApi = {
       } catch (e) {
       }
    },
-   async getDevice(id: number) {
+   async getDevice(id: number, token: string | undefined) {
       try {
          let responseDeviceProperties = await fetch("http://api.mechatronics.by/api/3/get_device", {
             method: 'POST',
             body: JSON.stringify({ id: id }),
             headers: {
-               'authorization': `Bearer ${process.env.TOKEN}`,
+               'authorization': `Bearer ${token}`,
                'Content-Type': 'application/json;charset=utf-8'
             },
             redirect: 'follow'
