@@ -5,6 +5,7 @@ import { SensorSvg } from '../icons_svg/SensorSvg'
 
 type SensorItemPropsType = {
    id: number,
+   deviceId: number
    name: string,
    rate: string | null,
    value: string,
@@ -22,9 +23,9 @@ const isActiveSensor = (title: string) => {
    }
 }
 
-export function SensorItem({ id, name, rate, value }: SensorItemPropsType) {
+export function SensorItem({ id, deviceId, name, rate, value }: SensorItemPropsType) {
    return (
-      <Link href='#' className="w-28 flex flex-col justify-between text-center">
+      <Link href={`${deviceId}/sensor/${id}`} className="w-28 flex flex-col justify-between text-center">
          <div className="flex-1 text-[0.8rem] leading-3">
             {name}
          </div>

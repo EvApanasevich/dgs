@@ -37,7 +37,7 @@ export default async function ObjectInDetail({ params }: { params: { id: number 
       <div className="container">
          <p className="text-2xl font-semibold">{`"${device.name ? device.name : 'no name'}"`}</p>
          <div className="grid grid-cols-2 gap-4 p-5">
-            <ViewBlock title={'питание объекта'} borderColor={'border-lime-500'}>
+            <ViewBlock title={'Питание объекта'} borderColor={'border-lime-500'}>
                <div className="flex gap-4">
                   <HomeSvg color={`${'#84cc16'}`} />
                   <span>
@@ -45,7 +45,7 @@ export default async function ObjectInDetail({ params }: { params: { id: number 
                   </span>
                </div>
             </ViewBlock>
-            <ViewBlock title={'резервное электроснабжение'} borderColor={device.lon > 27 ? 'border-lime-500' : 'border-red-500'}>
+            <ViewBlock title={'Резервное электроснабжение'} borderColor={device.lon > 27 ? 'border-lime-500' : 'border-red-500'}>
                <div className="flex gap-4">
                   <GeneratorSvg color={device.lon > 27 ? '#84cc16' : '#ef4444'} />
                   <span>
@@ -53,12 +53,13 @@ export default async function ObjectInDetail({ params }: { params: { id: number 
                   </span>
                </div>
             </ViewBlock>
-            <ViewBlock title={'параметры'} borderColor={'border-gray-300'} gridPos={'col-span-2'}>
+            <ViewBlock title={'Параметры'} borderColor={'border-gray-300'} gridPos={'col-span-2'}>
                <div className="flex flex-wrap">
                   {getSensors().map((sensor) => {
                      return <SensorItem
                         key={sensor.id}
                         id={sensor.id}
+                        deviceId={params.id}
                         name={sensor.name}
                         rate={sensor.rate}
                         value={sensor.value}
