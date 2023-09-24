@@ -1,4 +1,4 @@
-import { DeviceType } from "@/app/review/page";
+import { SensorType } from "@/types/types";
 
 export const authApi = {
    async authorize(cred: { email: string, password: string, language: string }) {
@@ -56,7 +56,30 @@ export const devicesApi = {
          return await responseDeviceProperties.json();
 
       } catch (error) {
+      }
+   },
+   async getDeviceSensors(id: number, token: string | undefined) {
+      try {
+         let responseDeviceSensors = await fetch("http://api.mechatronics.by/api/3/get_device_sens", {
+            method: 'POST',
+            body: JSON.stringify({ id: id }),
+            headers: {
+               'authorization': `Bearer ${token}`,
+               'Content-Type': 'application/json;charset=utf-8'
+            },
+            redirect: 'follow'
+         })
 
+         const sensors = await responseDeviceSensors.json();
+
+         let arrSensors: Array<SensorType> = [];
+         for (let id in sensors) {
+            arrSensors.push(sensors[id]);
+         }
+
+         return arrSensors
+
+      } catch (error) {
       }
    }
 }

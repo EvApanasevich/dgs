@@ -19,14 +19,6 @@ export default async function ObjectInDetail({ params }: { params: { id: number 
       return arrSensors
    }
 
-   const getActions = () => {
-      let arrActions = [];
-      for (let id in device.actions) {
-         arrActions.push(device.actions[id]);
-      }
-      return arrActions
-   }
-
    if (!device) {
       return (
          <p className="text-lg text-red-500">Информация отсутствует. Попробуйте получить другой девайс.</p>

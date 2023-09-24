@@ -6,8 +6,7 @@ import { usePathname } from "next/navigation"
 export function Navigation() {
 
    const pathName = usePathname()
-   const isActive = pathName.includes('')
-
+   
    return (
       <>
          <Link

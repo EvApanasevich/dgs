@@ -1,4 +1,4 @@
-export default async function Sensor({ params }: { params: { id: number } }) {
+export default async function SensorPage({ params }: { params: { id: number } }) {
    return (
       <div>
          sensor page

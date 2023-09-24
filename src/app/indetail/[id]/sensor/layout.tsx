@@ -1,14 +1,21 @@
+import { getServerSession } from "next-auth/next"
+import { SensorSelect } from "./SensorSelect"
+import { authConfig } from "../../../../../configs/auth"
+import { devicesApi } from "@/app/api/devices/api_devices"
+
 type SensorLayoutPropsType = {
-   params: { id: number, sensorId: number }
+   params: { id: number }
    children: React.ReactNode
 }
 
 export default async function SensorLayout({ params, children }: SensorLayoutPropsType) {
-   console.log('lay', params)
+
+   const session = await getServerSession(authConfig)
+   const sensors = await devicesApi.getDeviceSensors(params.id, session?.user.token)
+
    return (
       <div>
-         sensor page with device ID: {params.sensorId}
-         <div>.....................................................................</div>
+         <SensorSelect sensors={sensors} />
          {children}
       </div>
    )

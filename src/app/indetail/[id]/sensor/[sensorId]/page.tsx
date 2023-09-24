@@ -1,7 +1,11 @@
-export default async function SensorLayout({ params }: { params: { id: number, sensorId: number } }) {
+export default async function Sensor({ params }: { params: { id: number, sensorId: number } }) {
+
+   // const session = await getServerSession(authConfig)
+   // const sensors = await devicesApi.getDeviceSensors(params.id, session?.user.token)
+
    return (
       <div>
-         sensor with ID: {params.sensorId} and device ID: {params.id}
+         table sensor ID: {params.sensorId} 
       </div>
    )
 }
