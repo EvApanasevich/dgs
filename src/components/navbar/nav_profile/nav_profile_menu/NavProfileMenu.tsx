@@ -1,4 +1,4 @@
-
+'use client'
 type NavProfileMenuTypeProps = {
    isOpen: boolean,
    setIsOpen: (isOpen: boolean) => void,

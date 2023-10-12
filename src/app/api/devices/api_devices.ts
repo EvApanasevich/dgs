@@ -1,4 +1,5 @@
-import { SensorType } from "@/types/types";
+import { convertDate, convertMonth } from "@/app/indetail/[id]/sensor/[sensorId]/utils";
+import { SensorType, SensorValueType } from "@/types/types";
 
 export const authApi = {
    async authorize(cred: { email: string, password: string, language: string }) {
@@ -78,6 +79,42 @@ export const devicesApi = {
          }
 
          return arrSensors
+
+      } catch (error) {
+      }
+   },
+   async getDeviceSensorValuesForPeriod(id: number, sensorId: number, from: string, to: string, token: string | undefined) {
+      try {
+         let responseDeviceSensorValuesForPeriod = await fetch("http://api.mechatronics.by/api/3/get_sensors", {
+            method: 'POST',
+            body: JSON.stringify({
+               id: id,
+               sensor: sensorId,
+               start: from, //utc+3
+               finish: to,
+            }),
+            headers: {
+               'authorization': `Bearer ${token}`,
+               'Content-Type': 'application/json;charset=utf-8'
+            },
+            redirect: 'follow'
+         })
+
+         let sensorValuesForPeriod = await responseDeviceSensorValuesForPeriod.json();
+
+         let arrSensorsValues: Array<SensorValueType> = [];
+         for (let valueDate in sensorValuesForPeriod) {
+
+            let date = new Date(valueDate)
+            date.setHours(date.getHours() - date.getTimezoneOffset() / 60)
+
+            let newDate = `${date.getFullYear()}-${convertMonth(date.getMonth())}-${convertDate(date.getDate())} ${convertDate(date.getHours())}:${convertDate(date.getMinutes())}:${convertDate(date.getSeconds())}`
+
+            arrSensorsValues.push({ date: newDate, ...sensorValuesForPeriod[valueDate] });
+         }
+
+         console.log(arrSensorsValues)
+         return arrSensorsValues
 
       } catch (error) {
       }

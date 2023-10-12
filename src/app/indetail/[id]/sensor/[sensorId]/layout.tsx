@@ -1,5 +1,3 @@
-import { Period } from "./Period"
-
 type SensorTableLayoutPropsType = {
    params: {
       id: number
@@ -15,7 +13,6 @@ export default async function SensorTableLayout({ params, children }: SensorTabl
 
    return (
       <div>
-         <Period/>
          {children}
       </div>
    )

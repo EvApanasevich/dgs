@@ -1,5 +1,3 @@
-'use client'
-
 import Link from "next/link"
 import { SensorSvg } from '../icons_svg/SensorSvg'
 
@@ -25,7 +23,7 @@ const isActiveSensor = (title: string) => {
 
 export function SensorItem({ id, deviceId, name, rate, value }: SensorItemPropsType) {
    return (
-      <Link href={`${deviceId}/sensor/${id}/today`} className="w-28 flex flex-col justify-between text-center">
+      <Link href={`${deviceId}/sensor/${id}`} className="w-28 flex flex-col justify-between text-center">
          <div className="flex-1 text-[0.8rem] leading-3">
             {name}
          </div>

@@ -4,3 +4,9 @@ export type SensorType = {
    rate: string
    value: string
 }
+
+export type SensorValueType = {
+   date: string
+   package_id: number
+   value: number
+}
