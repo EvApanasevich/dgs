@@ -1,5 +1,5 @@
 'use client'
-import { useParams, usePathname } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import { ChangeEventHandler, MouseEventHandler, useState } from "react";
 import { convertMonth, convertDate } from "./utils";
 
@@ -12,6 +12,7 @@ export function SetPeriod({ period, setPeriod }: SetPeriodPropsType) {
 
    const params = useParams()
    const pathName = usePathname()
+   const router = useRouter()
    const [dateFrom, setDateFrom] = useState('')
    const [dateTo, setDateTo] = useState('')
 
@@ -30,32 +31,16 @@ export function SetPeriod({ period, setPeriod }: SetPeriodPropsType) {
 
       switch (per) {
          case 'today':
-            setPeriod({
-               date: per,
-               from: `${date.getFullYear()}-${convertMonth(date.getMonth())}-${convertDate(date.getDate())} 00:00:00`,
-               to: `${date.getFullYear()}-${convertMonth(date.getMonth())}-${convertDate(date.getDate())} ${convertDate(date.getHours())}:${convertDate(date.getMinutes())}:${convertDate(date.getSeconds())}`
-            })
+            router.push(`/indetail/${params.id}/sensor/${params.sensorId}/${per}`)
             break
          case 'yesterday':
-            setPeriod({
-               date: per,
-               from: `${date.getFullYear()}-${convertMonth(date.getMonth())}-${convertDate(date.getDate() - 1)} 00:00:00`,
-               to: `${date.getFullYear()}-${convertMonth(date.getMonth())}-${convertDate(date.getDate())} ${convertDate(date.getHours())}:${convertDate(date.getMinutes())}:${convertDate(date.getSeconds())}`
-            })
+            router.push(`/indetail/${params.id}/sensor/${params.sensorId}/${per}`)
             break
          case 'week':
-            setPeriod({
-               date: per,
-               from: `${date.getFullYear()}-${convertMonth(date.getMonth())}-${convertDate(date.getDate() - date.getDay() + 1)} 00:00:00`,
-               to: `${date.getFullYear()}-${convertMonth(date.getMonth())}-${convertDate(date.getDate())} ${convertDate(date.getHours())}:${convertDate(date.getMinutes())}:${convertDate(date.getSeconds())}`
-            })
+            router.push(`/indetail/${params.id}/sensor/${params.sensorId}/${per}`)
             break
          case 'month':
-            setPeriod({
-               date: per,
-               from: `${date.getFullYear()}-${convertMonth(date.getMonth())}-01 00:00:00`,
-               to: `${date.getFullYear()}-${convertMonth(date.getMonth())}-${convertDate(date.getDate())} ${convertDate(date.getHours())}:${convertDate(date.getMinutes())}:${convertDate(date.getSeconds())}`
-            })
+            router.push(`/indetail/${params.id}/sensor/${params.sensorId}/${per}`)
             break
          default:
             setPeriod({ date: per, from: `${dateFrom} 00:00:00`, to: `${dateTo} 00:00:00` })
@@ -73,18 +58,18 @@ export function SetPeriod({ period, setPeriod }: SetPeriodPropsType) {
       <div>
          <div className="flex pt-4">
             {periodTitles.map(title => {
-               return <div onClick={() => onClickHandler(title[0])} className={`${period.date === title[0] ?
+               return <div onClick={() => onClickHandler(title[0])} className={`${params.period === title[0] ?
                   'bg-gray-200 border border-gray-700' : 'bg-gray-300'} 
                   flex-1 p-2 text-center cursor-pointer`}>{title[1]}</div>
             })}
          </div>
-         <div className="py-5">
+         {/* <div className="py-5">
             <label htmlFor="from">С: {dateFrom}</label>
             <input onChange={handlerFrom} value={dateFrom} className="border border-gray-500 mx-2" name="from" type="date" />
             <label htmlFor="to">По: {dateTo}</label>
             <input onChange={handlerTo} value={dateTo} className="border border-gray-500 mx-2" name="to" type="date" />
             <button onClick={() => onClickHandler('set')} className="border border-gray-500 bg-gray-200 px-2 ml-2">OK</button>
-         </div>
+         </div> */}
       </div>
    )
 }

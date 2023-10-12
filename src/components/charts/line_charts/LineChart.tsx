@@ -18,21 +18,24 @@ import { useSensorStore } from '@/app/indetail/[id]/sensor/[sensorId]/store';
 
 type LineChartPropsType = {
    sensors: Array<SensorType> | undefined
+   sensorsValues: Array<SensorValueType> | undefined
+   from: string
+   to: string
 }
 
-export function LineChart({ sensors }: LineChartPropsType) {
+export function LineChart({ sensors, sensorsValues, from, to }: LineChartPropsType) {
 
    const session = useSession()
    const params = useParams()
 
-   const { period, loading, error, sensorsValues, setPeriod, getSensorsValuesForPeriod } = useSensorStore((state) => ({
-      period: state.period,
-      loading: state.loading,
-      error: state.error,
-      sensorsValues: state.sensorsValues,
-      setPeriod: state.setPeriod,
-      getSensorsValuesForPeriod: state.getSensorsValuesForPeriod,
-   }))
+   // const { period, loading, error, sensorsValues, setPeriod, getSensorsValuesForPeriod } = useSensorStore((state) => ({
+   //    period: state.period,
+   //    loading: state.loading,
+   //    error: state.error,
+   //    sensorsValues: state.sensorsValues,
+   //    setPeriod: state.setPeriod,
+   //    getSensorsValuesForPeriod: state.getSensorsValuesForPeriod,
+   // }))
 
    ChartJS.register(
       CategoryScale,
@@ -52,7 +55,7 @@ export function LineChart({ sensors }: LineChartPropsType) {
          },
          title: {
             display: true,
-            text: `Показатели за период с ${period.from} по ${period.to}`,
+            text: `Показатели за период с ( ${from} ) по ( ${to} )`,
          },
       },
    };
@@ -69,19 +72,19 @@ export function LineChart({ sensors }: LineChartPropsType) {
             borderWidth: 1,
             pointRadius: 0,
             borderColor: 'rgb(255, 99, 132)',
-            backgroundColor: 'rgba(255, 99, 132, 0.5)',
+            backgroundColor: 'rgba(255, 255, 255)',
          },
       ],
    };
 
-   useEffect(() => {
-      console.log('useefffect')
-      getSensorsValuesForPeriod(Number(params.id), Number(params.sensorId), period.from, period.to, session.data?.user.token)
-   }, [period])
+   // useEffect(() => {
+   //    console.log('useefffect')
+   //    getSensorsValuesForPeriod(Number(params.id), Number(params.sensorId), period.from, period.to, session.data?.user.token)
+   // }, [period])
 
-   if (loading) return <div className="text-red-500">LOADING...</div>
+   // if (loading) return <div className="text-red-500">LOADING...</div>
 
-   if (sensorsValues.length === 0) return <div className="text-red-500">Данные за период отсутствуют</div>
+   if (sensorsValues?.length === 0) return <div className="text-red-500">Данные за период отсутствуют</div>
 
    return (
       <div>

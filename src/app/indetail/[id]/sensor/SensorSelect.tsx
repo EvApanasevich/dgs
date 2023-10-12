@@ -24,7 +24,7 @@ export function SensorSelect({ sensors }: SensorSelectTypeProps) {
       const currentSensor = sensors?.find((sensor) => {
          return e.currentTarget.value === sensor.name
       })
-      router.push(`/indetail/${params.id}/sensor/${currentSensor?.id}`)
+      router.push(`/indetail/${params.id}/sensor/${currentSensor?.id}/${params.period}`)
    }
 
    return (

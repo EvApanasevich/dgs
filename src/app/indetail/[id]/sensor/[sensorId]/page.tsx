@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth/next";
-import { ReportTable } from "./ReportTable";
 import { authConfig } from "../../../../../../configs/auth";
 import { devicesApi } from "@/app/api/devices/api_devices";
+import { ReportTable } from "./ReportTable";
 
 export default async function Sensor({ params }: { params: { id: number, sensorId: number } }) {
 
@@ -9,8 +9,7 @@ export default async function Sensor({ params }: { params: { id: number, sensorI
    const sensors = await devicesApi.getDeviceSensors(params.id, session?.user.token)
 
    return (
-      <div className="min-h-[64rem]">
-         <ReportTable sensors={sensors}/>
+      <div>
       </div>
    )
 }

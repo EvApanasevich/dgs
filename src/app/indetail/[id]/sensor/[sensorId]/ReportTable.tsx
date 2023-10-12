@@ -18,7 +18,6 @@ export function ReportTable({ sensors }: ReportTablePropsType) {
    return (
       <div>
          <SetPeriod period={period} setPeriod={setPeriod} />
-         <LineChart sensors={sensors}/>
       </div>
    )
 }

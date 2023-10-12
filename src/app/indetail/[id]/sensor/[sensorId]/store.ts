@@ -1,3 +1,4 @@
+'use client'
 import { devicesApi } from '@/app/api/devices/api_devices'
 import { SensorValueType } from '@/types/types'
 import { create } from 'zustand'
