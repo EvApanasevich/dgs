@@ -2,8 +2,8 @@ import { getServerSession } from "next-auth/next";
 import { devicesApi } from "../api/devices/api_devices";
 import { ObjectList } from "./ObjectList";
 import { authConfig } from "../../../configs/auth";
-import { Search } from "@/components/search/search";
 import { DeviceType } from "@/types/types";
+import Link from "next/link";
 
 export default async function InDetailLayout({
   children,
@@ -16,8 +16,16 @@ export default async function InDetailLayout({
   );
 
   return (
-    <div>
-      <ObjectList devices={devices} />
+    <div className="flex-1 pt-10">
+      <div className="border-b border-gray-500 pb-5 pt-2.5">
+        <Link
+          href="/review"
+          className="text-xs text-gray-800 hover:text-gray-400"
+        >
+          {"<< Вернуться к списку доступных объектов"}
+        </Link>
+      </div>
+      {/* <ObjectList devices={devices} /> */}
       {children}
     </div>
   );

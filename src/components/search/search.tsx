@@ -19,21 +19,22 @@ export function Search() {
   }, [query, router]);
 
   return (
-    <div className="container mx-auto flex justify-end pt-5">
+    <div className="border border-gray-500 rounded px-1">
       <input
-        className="w-80 h-8 border border-gray-500 rounded px-4 mr-2"
+        className="text-sm w-64 h-8 p-4 outline-none"
         value={searchText}
         type="text"
-        placeholder="search object..."
+        placeholder="поиск..."
         onChange={(e) => setSearchText(e.target.value)}
+        maxLength={30}
+        autoFocus={true}
       />
-      <button>
-        <Image
-          className="h-8 w-8 rounded-full bg-white"
-          src={searchIcon}
-          alt=""
-        />
-      </button>
+
+      <Image
+        className="inline-block h-6 w-6 rounded-full bg-white"
+        src={searchIcon}
+        alt=""
+      />
     </div>
   );
 }
