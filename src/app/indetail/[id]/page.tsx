@@ -24,7 +24,7 @@ export default async function ObjectInDetail({
 
   if (!device) {
     return (
-      <p className="text-base text-red-500 pt-5">
+      <p className="text-sm text-red-500 pt-5">
         Информация отсутствует. Попробуйте получить другой девайс.
       </p>
     );
@@ -32,7 +32,7 @@ export default async function ObjectInDetail({
 
   return (
     <div className="container">
-      <p className="text-2xl font-semibold pt-10">{`"${
+      <p className="text-lg font-semibold pt-10">{`"${
         device.name ? device.name : "no name"
       }"`}</p>
       <div className="grid grid-cols-2 gap-4 p-5">

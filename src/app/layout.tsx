@@ -24,7 +24,7 @@ export default function RootLayout({
           {/* <header className="sticky top-0 z-[100]">
             <Navbar />
           </header> */}
-          <main className="container mx-auto min-h-screen flex-col items-center">
+          <main className="container mx-auto max-w-5xl min-h-screen flex-col items-center">
             {/* <div className="flex">
               <Navigation />
             </div> */}

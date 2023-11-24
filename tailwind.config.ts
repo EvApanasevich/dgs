@@ -15,15 +15,17 @@ const config: Config = {
       },
     },
     screens: {
-      'sm': '640px',
-      'md': '768px',
-      'lg': '1024px',
+      'xl': {'max': '1024px'},
+      'lg': {'max': '768px'},
+      'md': {'max': '640px'},
+      'sm': {'max': '480px'},
     },
     container: {
       padding: {
-        DEFAULT: '1rem',
+        DEFAULT: '1.5rem',
         sm: '2rem',
         lg: '2rem',
+        xl: '2rem',
       },
     },
   },

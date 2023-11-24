@@ -29,7 +29,7 @@ export default async function Review({
 
   return (
     <div className="flex flex-col">
-      <div className="flex justify-between pt-10 pb-5">
+      <div className="flex justify-between pt-10 pb-5 md:flex-col-reverse md:items-end">
         <Search />
         <NavProfile />
       </div>
