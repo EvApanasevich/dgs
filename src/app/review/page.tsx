@@ -4,6 +4,8 @@ import { getServerSession } from "next-auth/next";
 import { authConfig } from "../../../configs/auth";
 import { DeviceType } from "@/types/types";
 import { Search } from "@/components/search/search";
+import { NavProfile } from "@/components/navbar/nav_profile/NavProfile";
+import { Navigation } from "@/components/navbar/navigation/Navigation";
 
 export default async function Review({
   searchParams,
@@ -26,9 +28,13 @@ export default async function Review({
   }
 
   return (
-    <div>
-      <Search />
-      <div className="grid gap-x-8 gap-y-10 grid-cols-3 p-12 scroll-auto">
+    <div className="flex flex-col">
+      <div className="flex justify-between pt-10 pb-5">
+        <Search />
+        <NavProfile />
+      </div>
+
+      <div className="grid gap-x-8 gap-y-10 grid-cols-3 p-12 scroll-auto border-t border-gray-500">
         {devices &&
           filteredDevices?.map((device) => {
             return (
