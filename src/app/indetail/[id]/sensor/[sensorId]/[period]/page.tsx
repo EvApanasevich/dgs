@@ -14,7 +14,7 @@ export default async function Period({ params }: { params: { id: number, sensorI
    const year = currDate.getFullYear();
    const month = convertMonth(currDate.getMonth());
    const date = convertDate(currDate.getDate());
-   const day = currDate.getDay();
+   const day = convertDate(currDate.getDay());
    const hours = convertDate(currDate.getHours());
    const minutes = convertDate(currDate.getMinutes());
    const seconds = convertDate(currDate.getSeconds());
@@ -30,7 +30,7 @@ export default async function Period({ params }: { params: { id: number, sensorI
       from = `${from}-${+date - 1} ${midnight}`
    }
    if (params.period === 'week') {
-      from = `${from}-${+date - day + 1} ${midnight}`
+      from = `${from}-${+date - +day + 1} ${midnight}`
    }
    if (params.period === 'month') {
       from = `${from}-01 ${midnight}`
