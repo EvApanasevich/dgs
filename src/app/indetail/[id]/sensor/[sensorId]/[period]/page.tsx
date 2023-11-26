@@ -4,13 +4,19 @@ import { getServerSession } from "next-auth/next";
 import { authConfig } from "../../../../../../../configs/auth";
 import { convertDate, convertMonth } from "../utils";
 
-export default async function Period({ params }: { params: { id: number, sensorId: number, period: string } }) {
+export default async function Period({
+  params,
+}: {
+  params: { id: number; sensorId: number; period: string };
+}) {
+  const session = await getServerSession(authConfig);
+  const sensors = await devicesApi.getDeviceSensors(
+    params.id,
+    session?.user.token
+  );
 
-   const session = await getServerSession(authConfig)
-   const sensors = await devicesApi.getDeviceSensors(params.id, session?.user.token)
-
-   const currDate = new Date();
-
+  const currDate = new Date();
+  
    const year = currDate.getFullYear();
    const month = convertMonth(currDate.getMonth());
    const date = convertDate(currDate.getDate());
@@ -36,13 +42,23 @@ export default async function Period({ params }: { params: { id: number, sensorI
       from = `${from}-01 ${midnight}`
    }
 
-   const sensorsValues = await devicesApi.getDeviceSensorValuesForPeriod(
-      params.id, params.sensorId, from, to, session?.user.token)
+  const sensorsValues = await devicesApi.getDeviceSensorValuesForPeriod(
+    params.id,
+    params.sensorId,
+    from,
+    to,
+    session?.user.token
+  );
 
-   return (
-      <div className="pt-5 pb-10">
-         period page
-         <LineChart sensors={sensors} sensorsValues={sensorsValues} from={from} to={to}/>
-      </div>
-   )
+  return (
+    <div className="pt-5 pb-10">
+      period page
+      <LineChart
+        sensors={sensors}
+        sensorsValues={sensorsValues}
+        from={from}
+        to={to}
+      />
+    </div>
+  );
 }

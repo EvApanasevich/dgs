@@ -1,29 +1,29 @@
-'use client'
+"use client";
+
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { ChangeEventHandler, MouseEventHandler, useState } from "react";
 import { convertMonth, convertDate } from "./utils";
 import Link from "next/link";
 
 type SetPeriodPropsType = {
-   period: { date: string, from: string, to: string }
-   setPeriod: (period: { date: string, from: string, to: string }) => void
-}
+  period: { date: string; from: string; to: string };
+  setPeriod: (period: { date: string; from: string; to: string }) => void;
+};
 
 export function SetPeriod({ period, setPeriod }: SetPeriodPropsType) {
+  const params = useParams();
+  const pathName = usePathname();
+  const router = useRouter();
+  const [dateFrom, setDateFrom] = useState("");
+  const [dateTo, setDateTo] = useState("");
 
-   const params = useParams()
-   const pathName = usePathname()
-   const router = useRouter()
-   const [dateFrom, setDateFrom] = useState('')
-   const [dateTo, setDateTo] = useState('')
-
-   const periodTitles = [
-      ['today', 'Сегодня'],
-      ['yesterday', 'Вчера'],
-      ['week', 'Неделя'],
-      ['month', 'Месяц'],
-   ]
-
+  const periodTitles = [
+    ["today", "Сегодня"],
+    ["yesterday", "Вчера"],
+    ["week", "Неделя"],
+    ["month", "Месяц"],
+  ];
+  
    // const onClickHandler = (per: string) => {
    //    setDateFrom('')
    //    setDateTo('')
@@ -75,6 +75,6 @@ export function SetPeriod({ period, setPeriod }: SetPeriodPropsType) {
             <input onChange={handlerTo} value={dateTo} className="border border-gray-500 mx-2" name="to" type="date" />
             <button onClick={() => onClickHandler('set')} className="border border-gray-500 bg-gray-200 px-2 ml-2">OK</button>
          </div> */}
-      </div>
-   )
+    </div>
+  );
 }

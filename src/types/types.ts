@@ -10,3 +10,11 @@ export type SensorValueType = {
    package_id: number
    value: number
 }
+
+export type DeviceType = {
+   id: number;
+   name: string;
+   lat: number;
+   lon: number;
+   time: string;
+ };
