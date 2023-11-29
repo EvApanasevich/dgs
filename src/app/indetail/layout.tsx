@@ -20,7 +20,7 @@ export default async function InDetailLayout({
       <div className="border-b border-gray-500 pb-5 pt-2.5">
         <Link
           href="/review"
-          className="text-xs text-gray-800 hover:text-gray-400"
+          className="text-base text-gray-800 hover:text-gray-400"
         >
           {"<< Вернуться к списку доступных объектов"}
         </Link>

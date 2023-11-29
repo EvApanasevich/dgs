@@ -31,11 +31,11 @@ export default async function ObjectInDetail({
   }
 
   return (
-    <div className="container">
+    <div className="">
       <p className="text-lg font-semibold pt-10">{`"${
         device.name ? device.name : "no name"
       }"`}</p>
-      <div className="grid grid-cols-2 gap-4 p-5">
+      <div className="grid grid-cols-2 lg:px-0 md:grid-cols-1 gap-4 p-5 md:px-16 sm:px-0">
         <ViewBlock title={"Питание объекта"} borderColor={"border-lime-500"}>
           <div className="flex gap-4">
             <HomeSvg color={`${"#84cc16"}`} size={"32"} />
@@ -61,7 +61,7 @@ export default async function ObjectInDetail({
         <ViewBlock
           title={"Параметры"}
           borderColor={"border-gray-300"}
-          gridPos={"col-span-2"}
+          gridPos={"col-span-2 md:col-span-1"}
         >
           <div className="flex flex-wrap">
             {getSensors().map((sensor) => {

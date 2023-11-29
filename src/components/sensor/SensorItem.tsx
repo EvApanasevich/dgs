@@ -32,7 +32,7 @@ export function SensorItem({
     <Link
       // href={`${deviceId}/sensor/${id}/today`}
       href={"#"}
-      className="w-28 flex flex-col justify-between text-center"
+      className="w-28 flex flex-col justify-between text-center pb-3"
     >
       <div className="flex-1 text-[0.6rem] leading-3">{name}</div>
       <div className="mx-auto">
