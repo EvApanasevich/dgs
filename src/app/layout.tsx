@@ -6,10 +6,10 @@ import { AppProvider } from "@/providers/AppProvider";
 import { Navbar } from "@/components/navbar/Navbar";
 import { Navigation } from "@/components/navbar/navigation/Navigation";
 
-// const roboto = Roboto({
-//   subsets: ["cyrillic", "latin"],
-//   weight: "400",
-// });
+const roboto = Roboto({
+  subsets: ["cyrillic", "latin"],
+  weight: "400",
+});
 
 export const metadata: Metadata = {
   title: "Дизельные генераторы",
@@ -24,7 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <Head>
-        <meta name="viewport" content="viewport-fit=cover" />
+        <meta name="viewport" content="width=device-width, user-scalable=no" />
       </Head>
       <body>
         <AppProvider>
