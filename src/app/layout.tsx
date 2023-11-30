@@ -1,5 +1,6 @@
 import "./globals.css";
 import type { Metadata } from "next";
+import Head from "next/head";
 import { Roboto } from "next/font/google";
 import { AppProvider } from "@/providers/AppProvider";
 import { Navbar } from "@/components/navbar/Navbar";
@@ -22,6 +23,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <Head>
+        <meta name="viewport" content="viewport-fit=cover" />
+      </Head>
       <body>
         <AppProvider>
           {/* <header className="sticky top-0 z-[100]">
