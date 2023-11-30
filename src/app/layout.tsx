@@ -8,7 +8,6 @@ import { Navigation } from "@/components/navbar/navigation/Navigation";
 
 const inter = Inter({
   subsets: ["cyrillic", "latin"],
-  weight: "400",
 });
 
 export const metadata: Metadata = {
