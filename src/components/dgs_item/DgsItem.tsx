@@ -26,7 +26,7 @@ export function DgsItem({
           : reservPower === "not_ready"
           ? "border-red-500"
           : "border-gray-300"
-      }font-sans font-bold flex flex-col relative w-full border-2 rounded-xl`}
+      } flex flex-col relative w-full border-2 rounded-xl`}
     >
       <span className="absolute font-medium text-xs -top-3 px-1 leading-tight left-8 inline-block bg-white">
         {deviceName ? deviceName : "no_name"}:

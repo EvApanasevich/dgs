@@ -1,12 +1,12 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import Head from "next/head";
-import { Roboto } from "next/font/google";
+import { Inter } from "next/font/google";
 import { AppProvider } from "@/providers/AppProvider";
 import { Navbar } from "@/components/navbar/Navbar";
 import { Navigation } from "@/components/navbar/navigation/Navigation";
 
-const roboto = Roboto({
+const inter = Inter({
   subsets: ["cyrillic", "latin"],
   weight: "400",
 });
@@ -26,7 +26,7 @@ export default function RootLayout({
       <Head>
         <meta name="viewport" content="width=device-width, user-scalable=no" />
       </Head>
-      <body>
+      <body className={inter.className}>
         <AppProvider>
           {/* <header className="sticky top-0 z-[100]">
             <Navbar />
