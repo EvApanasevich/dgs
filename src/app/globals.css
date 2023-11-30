@@ -14,5 +14,6 @@
 
 body {
   color: rgb(var(--foreground-rgb));
+  font-family: 'Times New Roman', Times, serif;
 }
 
