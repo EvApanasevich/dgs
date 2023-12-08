@@ -4,6 +4,8 @@ import { ObjectList } from "./ObjectList";
 import { authConfig } from "../../../configs/auth";
 import { DeviceType } from "@/types/types";
 import Link from "next/link";
+import { updateUser } from "../../../lib/actions/user.actions";
+import { Settings } from "@/components/settings/Settings";
 
 export default async function InDetailLayout({
   children,
@@ -20,7 +22,7 @@ export default async function InDetailLayout({
       <div className="border-b border-gray-500 pb-5 pt-2.5">
         <Link
           href="/review"
-          className="text-xs text-gray-800 hover:text-gray-400"
+          className=" text-sm text-gray-800 hover:text-gray-400"
         >
           {"<< Вернуться к списку доступных объектов"}
         </Link>
