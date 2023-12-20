@@ -27,7 +27,6 @@ export function Search() {
         placeholder="поиск..."
         onChange={(e) => setSearchText(e.target.value)}
         maxLength={30}
-        autoFocus={true}
       />
 
       <Image

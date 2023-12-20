@@ -28,7 +28,7 @@ export function DgsItem({
           : "border-gray-300"
       } flex flex-col relative w-full border-2 rounded-xl`}
     >
-      <span className="absolute font-medium text-xs -top-3 px-1 leading-tight left-8 inline-block bg-white">
+      <span className="absolute font-medium text-xs -top-2 px-1 leading-tight left-8 inline-block bg-white">
         {deviceName ? deviceName : "no_name"}:
       </span>
 
