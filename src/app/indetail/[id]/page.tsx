@@ -32,8 +32,6 @@ export default async function ObjectInDetail({
    const sensors = getSensors(device);
    const settingsForDevice: SettingsForDeviceType | null = await getUpdatedSettingsForDevice(device.id);
 
-   console.log(settingsForDevice)
-
    return (
       <div className="container">
          <div className="flex pt-10">
