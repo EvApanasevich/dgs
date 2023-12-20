@@ -1,7 +1,6 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { updateUser } from "../../../lib/actions/settings.actions";
 
 type ViewBlockPropsType = {
    children: React.ReactNode;
