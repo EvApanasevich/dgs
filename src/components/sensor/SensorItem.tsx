@@ -11,7 +11,6 @@ type SensorItemPropsType = {
 
 const isActiveSensor = (title: string) => {
    switch (title) {
-      case "Напряжение сети":
       case "Напряжение питания":
       case "Расход топлива":
       case "Мгновенный расход топлива":
