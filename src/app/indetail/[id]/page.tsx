@@ -8,38 +8,43 @@ import { authConfig } from "../../../../configs/auth";
 import { Settings } from "@/components/settings/Settings";
 import Image from "next/image";
 import settingsIcon from "../../../../public/settings.png";
+import { getSensors } from "./sensor_utils";
+import { getUpdatedSettingsForDevice } from "../../../../lib/actions/settings.actions";
+import { SettingsForDeviceType } from "@/types/types";
 
 export default async function ObjectInDetail({
    params,
 }: {
-   params: { id: number };
+   params: { id: string };
 }) {
+
    const session = await getServerSession(authConfig);
    const device = await devicesApi.getDevice(params.id, session?.user.token);
-
-   const getSensors = () => {
-      let arrSensors = [];
-      for (let id in device.sensors) {
-         arrSensors.push(device.sensors[id]);
-      }
-      return arrSensors;
-   };
 
    if (!device) {
       return (
          <p className="text-sm text-red-500 pt-5">
             Информация отсутствует. Попробуйте получить другой девайс.
          </p>
-      );
+      )
    }
+
+   const sensors = getSensors(device);
+   const settingsForDevice: SettingsForDeviceType | null = await getUpdatedSettingsForDevice(device.id);
+
+   console.log(settingsForDevice)
 
    return (
       <div className="container">
          <div className="flex pt-10">
             <p className="flex-1 text-lg leading-6 font-semibold">{`"${device.name ? device.name : "no name"
                }"`}</p>
-               <Image className="w-6 h-6" src={settingsIcon} alt="settings" />
-            <Settings email={session?.user.email} />
+            <Image className="w-6 h-6" src={settingsIcon} alt="settings" />
+            <Settings email={session?.user.email}
+               deviceId={device.id}
+               sensors={sensors}
+               settingsSensors={settingsForDevice?.sensors}
+            />
          </div>
 
          <div className="grid grid-cols-2 gap-4 p-5">
@@ -71,18 +76,31 @@ export default async function ObjectInDetail({
                gridPos={"col-span-2"}
             >
                <div className="flex flex-wrap">
-                  {getSensors().map((sensor) => {
-                     return (
-                        <SensorItem
-                           key={sensor.id}
-                           id={sensor.id}
-                           deviceId={params.id}
-                           name={sensor.name}
-                           rate={sensor.rate}
-                           value={sensor.value}
-                        />
-                     );
-                  })}
+                  {settingsForDevice?.sensors ?
+                     settingsForDevice?.sensors.map((sensor => {
+                        return (
+                           <SensorItem
+                              key={sensor.id}
+                              id={sensor.id}
+                              deviceId={params.id}
+                              name={sensor.newName}
+                              rate={sensor.rate}
+                              value={sensor.value}
+                           />
+                        )
+                     })
+                     ) : sensors.map((sensor) => {
+                        return (
+                           <SensorItem
+                              key={sensor.id}
+                              id={sensor.id}
+                              deviceId={params.id}
+                              name={sensor.name}
+                              rate={sensor.rate}
+                              value={sensor.value}
+                           />
+                        );
+                     })}
                </div>
             </ViewBlock>
             <ViewBlock title={"Диспетчер"} borderColor={"border-gray-300"}>

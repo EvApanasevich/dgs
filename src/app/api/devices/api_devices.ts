@@ -42,7 +42,7 @@ export const devicesApi = {
       } catch (e) {
       }
    },
-   async getDevice(id: number, token: string | undefined) {
+   async getDevice(id: string, token: string | undefined) {
       try {
          let responseDeviceProperties = await fetch("http://api.mechatronics.by/api/3/get_device", {
             method: 'POST',

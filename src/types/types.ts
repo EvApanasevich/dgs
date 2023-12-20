@@ -1,3 +1,5 @@
+import { UpdatedSensor } from "../../lib/actions/settings.actions"
+
 export type SensorType = {
    id: number
    name: string
@@ -12,9 +14,17 @@ export type SensorValueType = {
 }
 
 export type DeviceType = {
-   id: number;
-   name: string;
-   lat: number;
-   lon: number;
-   time: string;
+   id: number
+   name: string
+   lat: number
+   lon: number
+   time: string
  };
+
+ export type SettingsForDeviceType = {
+   _id: string
+   deviceId: string
+   date: Date
+   sensors: Array<UpdatedSensor>
+   userId: string
+ }

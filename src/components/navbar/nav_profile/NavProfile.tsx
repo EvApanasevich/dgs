@@ -4,7 +4,6 @@ import Link from "next/link";
 
 function getGreeting() {
    const hours = new Date().getHours();
-   console.log(hours)
    if (hours >= 0 && hours < 6) {
       return "Доброй ночи!";
    } else if (hours >= 6 && hours < 12) {
