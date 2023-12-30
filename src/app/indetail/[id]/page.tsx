@@ -35,8 +35,8 @@ export default async function ObjectInDetail({
    return (
       <div className="container">
          <div className="flex pt-10">
-            <p className="flex-1 text-lg leading-6 font-semibold">{`"${device.name ? device.name : "no name"
-               }"`}</p>
+            <p className="flex-1 text-lg leading-6 font-semibold">{`${device.name ? device.name : "no name"
+               }`}</p>
             <Image className="w-6 h-6" src={settingsIcon} alt="settings" />
             <Settings email={session?.user.email}
                deviceId={device.id}
@@ -74,31 +74,22 @@ export default async function ObjectInDetail({
                gridPos={"col-span-2"}
             >
                <div className="flex flex-wrap">
-                  {settingsForDevice?.sensors ?
-                     settingsForDevice?.sensors.map((sensor => {
-                        return (
-                           <SensorItem
-                              key={sensor.id}
-                              id={sensor.id}
-                              deviceId={params.id}
-                              name={sensor.newName}
-                              rate={sensor.rate}
-                              value={sensor.value}
-                           />
-                        )
-                     })
-                     ) : sensors.map((sensor) => {
-                        return (
-                           <SensorItem
-                              key={sensor.id}
-                              id={sensor.id}
-                              deviceId={params.id}
-                              name={sensor.name}
-                              rate={sensor.rate}
-                              value={sensor.value}
-                           />
-                        );
-                     })}
+                  {sensors.map((sensor) => {
+                     return (
+                        <SensorItem
+                           key={sensor.id}
+                           id={sensor.id}
+                           deviceId={params.id}
+                           name={
+                              settingsForDevice?.sensors ?
+                                 settingsForDevice?.sensors.find(sen => sen.id === sensor.id)?.newName
+                                 : sensor.name
+                           }
+                           rate={sensor.rate}
+                           value={sensor.value}
+                        />
+                     );
+                  })}
                </div>
             </ViewBlock>
             <ViewBlock title={"Диспетчер"} borderColor={"border-gray-300"}>

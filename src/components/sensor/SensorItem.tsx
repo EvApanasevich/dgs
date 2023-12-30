@@ -4,7 +4,7 @@ import { SensorSvg } from "../icons_svg/SensorSvg";
 type SensorItemPropsType = {
    id: number;
    deviceId: string;
-   name: string;
+   name: string | undefined;
    rate: string | null;
    value: string;
 };

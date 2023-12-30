@@ -3,8 +3,8 @@
 import { useState } from "react";
 import { Modal } from "../modal/Modal";
 import { UpdatedSensor, updateSettings } from "../../../lib/actions/settings.actions";
-import { useParams, useRouter, redirect } from "next/navigation";
-import { SensorType, SettingsForDeviceType } from "@/types/types";
+import { useParams, useRouter} from "next/navigation";
+import { SensorType } from "@/types/types";
 import { useForm } from "react-hook-form";
 import Image from "next/image";
 import pencilIcon from "../../../public/pencil.png";
@@ -24,9 +24,6 @@ export function Settings({ email, deviceId, sensors, settingsSensors }: Settings
    const params = useParams();
    const [isOpen, setIsOpen] = useState(false);
    const userId = session.data?.user.id
-
-   console.log(settingsSensors)
-
    const {
       register,
       formState: {
@@ -38,10 +35,15 @@ export function Settings({ email, deviceId, sensors, settingsSensors }: Settings
    const onSubmit = (data: any) => {
       const arrSensors: Array<UpdatedSensor> = [];
 
+      console.log(data)
+
       for (let key in data) {
          sensors.forEach(sensor => {
             if (sensor.name === key) {
+               const visible = data.visible.includes(key)
+
                arrSensors.push({
+                  visible,
                   newName: data[key],
                   id: sensor.id,
                   name: sensor.name,
@@ -53,7 +55,7 @@ export function Settings({ email, deviceId, sensors, settingsSensors }: Settings
       }
       updateSettings({ userId, deviceId, arrSensors });
       router.refresh();
-      setIsOpen(false); console.log(params.id)
+      setIsOpen(false);
    }
 
    return (
@@ -65,71 +67,47 @@ export function Settings({ email, deviceId, sensors, settingsSensors }: Settings
 
             <form onSubmit={handleSubmit(onSubmit)}>
                <ul>
-                  {settingsSensors ?
-                     settingsSensors.map(sen => {
-                        return (
-                           <li className="pb-2">
-                              <label className="flex">
-                                 <div className="flex-1 leading-[2.85rem]">
-                                    <div>{sen.name}</div>
-                                 </div>
+                  {sensors.map(sen => {
+                     return (
+                        <li key={sen.id} className="flex pb-2">
 
-                                 <div>
-                                    <div className="flex border border-gray-500 rounded-md p-1 mx-3">
-                                       <input
-                                          {...register(`${sen.name}`, {
-                                             required: "Обязательно к заполнению",
-                                             maxLength: { value: 40, message: "Не более 20 символов" }
-                                          })}
-                                          className="outline-none px-2 py-1"
-                                          type="text"
-                                          defaultValue={sen.newName}
-                                       />
-                                       <Image className="w-5 h-5" src={pencilIcon} alt="pencil" />
-                                    </div>
-                                    {errors[`${sen.name}`] && <p className="text-red-400 pl-4">{`${errors[`${sen.name}`]?.message}`}</p>}
-                                 </div>
+                           <div className="flex-1 leading-[2.85rem]">
+                              <div>{sen.name}</div>
+                           </div>
 
-                                 <div className="flex-1 leading-[2.85rem]">
-                                    {sen.value}
-                                 </div>
+                           <label htmlFor={`${sen.id}`}>отображать: </label>
+                           <input
+                              {...register("visible")}
+                              id={`${sen.id}`}
+                              type="checkbox"
+                              value={`${sen.name}`}
+                              defaultChecked={true}
+                           />
 
-                              </label>
-                           </li>
-                        )
-                     }) : sensors.map(sen => {
-                        return (
-                           <li className="pb-2">
-                              <label className="flex">
-                                 <div className="flex-1 leading-[2.85rem]">
-                                    <div>{sen.name}</div>
-                                 </div>
+                           <div>
+                              <div className="flex border border-gray-500 rounded-md p-1 mx-3">
+                                 <input
+                                    {...register(`${sen.name}`, {
+                                       required: "Обязательно к заполнению",
+                                       maxLength: { value: 40, message: "Не более 20 символов" },
+                                       value: settingsSensors ?
+                                          settingsSensors.find(s => s.id === sen.id)?.newName
+                                          : sen.name
+                                    })}
+                                    className="outline-none px-2 py-1"
+                                    type="text"
+                                 />
+                                 < Image className="w-5 h-5" src={pencilIcon} alt="pencil" />
+                              </div>
+                              {errors[`${sen.name}`] && <p className="text-red-400 pl-4">{`${errors[`${sen.name}`]?.message}`}</p>}
+                           </div>
 
-                                 <div>
-                                    <div className="flex border border-gray-500 rounded-md p-1 mx-3">
-                                       <input
-                                          {...register(`${sen.name}`, {
-                                             required: "Обязательно к заполнению",
-                                             maxLength: { value: 40, message: "Не более 20 символов" }
-                                          })}
-                                          className="outline-none px-2 py-1"
-                                          type="text"
-                                          defaultValue={sen.name}
-                                       />
-                                       <Image className="w-5 h-5" src={pencilIcon} alt="pencil" />
-                                    </div>
-                                    {errors[`${sen.name}`] && <p className="text-red-400 pl-4">{`${errors[`${sen.name}`]?.message}`}</p>}
-                                 </div>
-
-                                 <div className="flex-1 leading-[2.85rem]">
-                                    {sen.value}
-                                 </div>
-
-                              </label>
-                           </li>
-                        )
-                     })
-                  }
+                           <div className="flex-1 leading-[2.85rem]">
+                              {sen.value}
+                           </div>
+                        </li>
+                     )
+                  })}
                </ul>
                <button className="border-2 border-lime-500 rounded-md p-2" type="submit">Сохранить настройки</button>
             </form>
