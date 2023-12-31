@@ -75,7 +75,12 @@ export default async function ObjectInDetail({
             >
                <div className="flex flex-wrap">
                   {sensors.map((sensor) => {
+                     const visible = settingsForDevice ?
+                        settingsForDevice?.sensors.find(sen => sen.id === sensor.id)?.visible :
+                        null
+
                      return (
+                        (visible === null || visible) &&
                         <SensorItem
                            key={sensor.id}
                            id={sensor.id}
@@ -88,7 +93,7 @@ export default async function ObjectInDetail({
                            rate={sensor.rate}
                            value={sensor.value}
                         />
-                     );
+                     )
                   })}
                </div>
             </ViewBlock>

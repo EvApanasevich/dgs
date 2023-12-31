@@ -2,11 +2,11 @@ import Link from "next/link";
 import { SensorSvg } from "../icons_svg/SensorSvg";
 
 type SensorItemPropsType = {
-   id: number;
-   deviceId: string;
-   name: string | undefined;
-   rate: string | null;
-   value: string;
+   id: number
+   deviceId: string
+   name: string | undefined
+   rate: string | null
+   value: string
 };
 
 const isActiveSensor = (title: string) => {

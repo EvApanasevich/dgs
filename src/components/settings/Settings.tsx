@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Modal } from "../modal/Modal";
 import { UpdatedSensor, updateSettings } from "../../../lib/actions/settings.actions";
-import { useParams, useRouter} from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { SensorType } from "@/types/types";
 import { useForm } from "react-hook-form";
 import Image from "next/image";
@@ -67,43 +67,48 @@ export function Settings({ email, deviceId, sensors, settingsSensors }: Settings
 
             <form onSubmit={handleSubmit(onSubmit)}>
                <ul>
-                  {sensors.map(sen => {
+                  {sensors.map(sensor => {
                      return (
-                        <li key={sen.id} className="flex pb-2">
+                        <li key={sensor.id} className="flex pb-2">
 
                            <div className="flex-1 leading-[2.85rem]">
-                              <div>{sen.name}</div>
+                              <div>{sensor.name}</div>
                            </div>
 
-                           <label htmlFor={`${sen.id}`}>отображать: </label>
+                           <label htmlFor={`${sensor.id}`}>отображать: </label>
                            <input
                               {...register("visible")}
-                              id={`${sen.id}`}
+                              id={`${sensor.id}`}
                               type="checkbox"
-                              value={`${sen.name}`}
-                              defaultChecked={true}
+                              value={`${sensor.name}`}
+                              defaultChecked={
+                                 settingsSensors ?
+                                 settingsSensors.find(s => s.id === sensor.id)?.visible :
+                                 true
+                              }
                            />
 
                            <div>
                               <div className="flex border border-gray-500 rounded-md p-1 mx-3">
                                  <input
-                                    {...register(`${sen.name}`, {
+                                    {...register(`${sensor.name}`, {
                                        required: "Обязательно к заполнению",
                                        maxLength: { value: 40, message: "Не более 20 символов" },
                                        value: settingsSensors ?
-                                          settingsSensors.find(s => s.id === sen.id)?.newName
-                                          : sen.name
+                                          settingsSensors.find(s => s.id === sensor.id)?.newName
+                                          : sensor.name
                                     })}
                                     className="outline-none px-2 py-1"
                                     type="text"
                                  />
                                  < Image className="w-5 h-5" src={pencilIcon} alt="pencil" />
                               </div>
-                              {errors[`${sen.name}`] && <p className="text-red-400 pl-4">{`${errors[`${sen.name}`]?.message}`}</p>}
+                              {errors[`${sensor.name}`] &&
+                                 <p className="text-red-400 pl-4">{`${errors[`${sensor.name}`]?.message}`}</p>}
                            </div>
 
                            <div className="flex-1 leading-[2.85rem]">
-                              {sen.value}
+                              {sensor.value}
                            </div>
                         </li>
                      )
