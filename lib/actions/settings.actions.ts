@@ -5,6 +5,7 @@ import Settings from "../models/settings.model";
 import { connectToDB } from "../mongoose"
 
 export interface UpdatedSensor {
+   icon: number | undefined
    visible: boolean
    newName: string
    id: number

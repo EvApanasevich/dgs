@@ -1,13 +1,14 @@
 type SvgPropsType = {
   color: string;
+  size: string;
 };
 
-export function SensorSvg({ color }: SvgPropsType) {
+export function Sensor_1({ color, size }: SvgPropsType) {
   return (
     <svg
       fill={color}
-      width="32px"
-      height="32px"
+      width={size}
+      height={size}
       viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"
     >

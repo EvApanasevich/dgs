@@ -23,9 +23,10 @@
     padding: 20px;
     border-radius: 10px;
     background-color: white;
-    min-width: 50vw;
+    min-width: 70vw;
     transform: scale(0.5);
     transition: 0.4s all;
+    font-size: 12px;
 }
 
 .modal_content.active {
