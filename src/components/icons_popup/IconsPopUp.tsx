@@ -5,12 +5,18 @@ import "./IconsPopUp.css";
 import { COUNT_ICONS } from "../icons_svg/Icons";
 
 type IconsPopUpPropsType = {
+  lang: string;
   sensorId: number;
   icons: Array<{ sensorId: number; icon: number }>;
   setIcons: (icons: Array<{ sensorId: number; icon: number }>) => void;
 };
 
-export function IconsPopUp({ sensorId, icons, setIcons }: IconsPopUpPropsType) {
+export function IconsPopUp({
+  lang,
+  sensorId,
+  icons,
+  setIcons,
+}: IconsPopUpPropsType) {
   const [isOpenIcons, setIsOpenIcons] = useState(false);
 
   const clickHandler = (icon: number) => {
@@ -27,7 +33,7 @@ export function IconsPopUp({ sensorId, icons, setIcons }: IconsPopUpPropsType) {
         className="cursor-pointer px-3 py-1 mr-2 border border-gray-500"
         onClick={() => setIsOpenIcons(!isOpenIcons)}
       >
-        сменить иконку:
+        {lang === "RU" ? "сменить иконку:" : "change the icon"}
       </span>
       {isOpenIcons && (
         <div

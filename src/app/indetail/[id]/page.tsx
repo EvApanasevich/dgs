@@ -11,6 +11,7 @@ import settingsIcon from "../../../../public/settings.png";
 import { getSensors } from "./sensor_utils";
 import { getUpdatedSettingsForDevice } from "../../../../lib/actions/settings.actions";
 import { SettingsForDeviceType } from "@/types/types";
+import { getUserSettings } from "../../../../lib/actions/user_settings.actions";
 
 export default async function ObjectInDetail({
   params,
@@ -19,11 +20,14 @@ export default async function ObjectInDetail({
 }) {
   const session = await getServerSession(authConfig);
   const device = await devicesApi.getDevice(params.id, session?.user.token);
+  const userSettings = await getUserSettings(session?.user.id);
 
   if (!device) {
     return (
       <p className="text-sm text-red-500 pt-5">
-        Информация отсутствует. Попробуйте получить другой девайс.
+        {userSettings.language === "RU"
+          ? "Информация отсутствует. Попробуйте получить другой девайс."
+          : "There is no information available. Try to get another device."}
       </p>
     );
   }
@@ -40,6 +44,7 @@ export default async function ObjectInDetail({
         }`}</p>
         <Image className="w-6 h-6" src={settingsIcon} alt="settings" />
         <Settings
+          lang={userSettings.language}
           email={session?.user.email}
           deviceId={device.id}
           sensors={sensors}
@@ -48,14 +53,29 @@ export default async function ObjectInDetail({
       </div>
 
       <div className="grid grid-cols-2 gap-4 p-5">
-        <ViewBlock title={"Питание объекта"} borderColor={"border-lime-500"}>
+        <ViewBlock
+          title={
+            userSettings.language === "RU"
+              ? "Питание объекта"
+              : "The object's power supply"
+          }
+          borderColor={"border-lime-500"}
+        >
           <div className="flex gap-4">
             <HomeSvg color={`${"#84cc16"}`} size={"32"} />
-            <span className="text-xs">Питание от основной сети</span>
+            <span className="text-xs">
+              {userSettings.language === "RU"
+                ? "Питание от основной сети"
+                : "Powered by the main network"}
+            </span>
           </div>
         </ViewBlock>
         <ViewBlock
-          title={"Резервное электроснабжение"}
+          title={
+            userSettings.language === "RU"
+              ? "Резервное электроснабжение"
+              : "Backup power supply"
+          }
           borderColor={device.lon > 27 ? "border-lime-500" : "border-red-500"}
         >
           <div className="flex gap-4">
@@ -65,13 +85,17 @@ export default async function ObjectInDetail({
             />
             <span className="text-xs">
               {device.lon > 27
-                ? "Резервный источник готов к пуску"
-                : "Резервный источник не готов к пуску"}
+                ? userSettings.language === "RU"
+                  ? "Резервный источник готов к пуску"
+                  : "The backup source is ready to launch"
+                : userSettings.language === "RU"
+                ? "Резервный источник не готов к пуску"
+                : "The backup source is not ready to start"}
             </span>
           </div>
         </ViewBlock>
         <ViewBlock
-          title={"Параметры"}
+          title={userSettings.language === "RU" ? "Параметры" : "Parameters"}
           borderColor={"border-gray-300"}
           gridPos={"col-span-2"}
         >
@@ -110,11 +134,21 @@ export default async function ObjectInDetail({
             })}
           </div>
         </ViewBlock>
-        <ViewBlock title={"Диспетчер"} borderColor={"border-gray-300"}>
-          <div className="text-xs">Диспетчер</div>
+        <ViewBlock
+          title={userSettings.language === "RU" ? "Диспетчер" : "Dispatcher"}
+          borderColor={"border-gray-300"}
+        >
+          <div className="text-xs">
+            {userSettings.language === "RU" ? "Диспетчер" : "Dispatcher"}
+          </div>
         </ViewBlock>
-        <ViewBlock title={"Сообщения"} borderColor={"border-gray-300"}>
-          <div className="text-xs">Сообщения</div>
+        <ViewBlock
+          title={userSettings.language === "RU" ? "Сообщения" : "Messages"}
+          borderColor={"border-gray-300"}
+        >
+          <div className="text-xs">
+            {userSettings.language === "RU" ? "Сообщения" : "Messages"}
+          </div>
         </ViewBlock>
       </div>
     </div>

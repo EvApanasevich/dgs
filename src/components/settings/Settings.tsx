@@ -16,6 +16,7 @@ import { Icons } from "../icons_svg/Icons";
 import { IconsPopUp } from "../icons_popup/IconsPopUp";
 
 type SettingsPropsType = {
+  lang: string;
   email: string | undefined;
   deviceId: string;
   sensors: SensorType[];
@@ -23,6 +24,7 @@ type SettingsPropsType = {
 };
 
 export function Settings({
+  lang,
   email,
   deviceId,
   sensors,
@@ -89,12 +91,16 @@ export function Settings({
   return (
     <div className="text-sm">
       <button className="pl-4 leading-6" onClick={() => setIsOpenModal(true)}>
-        {"Настроить отображение датчиков >>"}
+        {lang === "RU"
+          ? "Настроить отображение датчиков >>"
+          : "Adjust the display of the sensors"}
       </button>
       <Modal active={isOpenModal} setActive={setIsOpenModal}>
         <p className="pb-5">
-          <span className="text-lime-600 font-medium">{email}</span>, сдесь вы
-          можете настроить отображение датчиков и другое
+          <span className="text-lime-600 font-medium">{email}</span>
+          {lang === "RU"
+            ? ", сдесь вы можете настроить отображение датчиков и другое"
+            : ", here you can customize the display of sensors and more"}
         </p>
 
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -107,6 +113,7 @@ export function Settings({
                   </div>
 
                   <IconsPopUp
+                    lang={lang}
                     sensorId={sensor.id}
                     icons={icons}
                     setIcons={setIcons}
@@ -119,7 +126,9 @@ export function Settings({
                   />
 
                   <label className="px-3" htmlFor={`${sensor.id}`}>
-                    отображать датчик:{" "}
+                    {lang === "RU"
+                      ? "отображать датчик: "
+                      : "display the sensor "}
                   </label>
                   <input
                     {...register("visible")}
@@ -138,7 +147,10 @@ export function Settings({
                     <div className="flex border border-gray-500 rounded-md p-1 mx-3">
                       <input
                         {...register(`${sensor.name}`, {
-                          required: "Обязательно к заполнению",
+                          required:
+                            lang === "RU"
+                              ? "Обязательно к заполнению"
+                              : "Required to be filled in",
                           maxLength: {
                             value: 40,
                             message: "Не более 40 символов",
@@ -173,7 +185,7 @@ export function Settings({
             className="border-2 border-lime-500 rounded-md p-2"
             type="submit"
           >
-            Сохранить настройки
+            {lang === "RU" ? "Сохранить настройки" : "Save Settings"}
           </button>
         </form>
       </Modal>

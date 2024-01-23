@@ -24,17 +24,17 @@ export function NavProfile({ lang }: NavProfilePropsType) {
 
   return (
     <div className="flex md:pb-2 sm:flex-col-reverse sm:items-end">
-      <div>
-        <span className="text-gray-800 text-xs leading-8">
+      <div className="flex ">
+        <div className="text-gray-800 text-xs leading-8">
           {getGreeting(lang)}
-        </span>
-        <span className="text-gray-900 font-medium leading-8 text-sm pl-3 pr-10 lg:pr-3">
+        </div>
+        <div className="text-gray-900 font-medium leading-8 text-sm pl-3 pr-10 lg:pr-3">
           {session?.data ? session?.data?.user?.email : ""}
-        </span>
+        </div>
       </div>
 
       {session?.data ? (
-        <span className="h-8 border border-gray-500 rounded px-4">
+        <span className="h-8 w-16 text-center  border border-gray-500 rounded">
           <Link
             href="#"
             onClick={() => signOut({ callbackUrl: "/" })}
@@ -44,7 +44,7 @@ export function NavProfile({ lang }: NavProfilePropsType) {
           </Link>
         </span>
       ) : (
-        <span className="h-8 border border-gray-500 rounded px-4">
+        <span className="h-8 w-16 text-center  border border-gray-500 rounded px-4">
           <Link href="/signin" className="text-gray-700 leading-8">
             {lang === "RU" ? "Войти" : "LogIn"}
           </Link>

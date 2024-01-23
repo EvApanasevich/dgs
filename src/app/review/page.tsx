@@ -33,8 +33,10 @@ export default async function Review({
   return (
     <div className="flex flex-col">
       <div className="flex justify-between pt-10 pb-5 md:flex-col-reverse md:items-end">
-        <Search lang={userSettings.language} />
-        <Language lang={userSettings.language} />
+        <div className="flex items-center gap-x-10">
+          <Search lang={userSettings.language} />
+          <Language lang={userSettings.language} />
+        </div>
         <NavProfile lang={userSettings.language} />
       </div>
 
