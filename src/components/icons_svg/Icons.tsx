@@ -2,6 +2,8 @@ import { Sensor_1 } from "./Sensor_1";
 import { Sensor_2 } from "./Sensor_2";
 import { Sensor_3 } from "./Sensor_3";
 
+export const COUNT_ICONS = [1, 2, 3];
+
 type SvgPropsType = {
   icon: number | undefined;
   color: string;

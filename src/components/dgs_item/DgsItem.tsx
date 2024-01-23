@@ -3,6 +3,7 @@ import { GeneratorSvg } from "../icons_svg/GeneratorSvg";
 import Link from "next/link";
 
 type DgsItemPropsType = {
+  lang: string;
   deviceId: number;
   deviceName: string;
   reservPower: string;
@@ -10,6 +11,7 @@ type DgsItemPropsType = {
 };
 
 export function DgsItem({
+  lang,
   deviceId,
   deviceName,
   reservPower,
@@ -48,8 +50,12 @@ export function DgsItem({
           </div>
           <div className="px-3 py-2 text-center text-[0.6rem]">
             {reservPower === "in_work"
-              ? "Питание от ДГУ"
-              : "Питание от основной сети"}
+              ? lang === "RU"
+                ? "Питание от ДГУ"
+                : "Powered by a diesel generator"
+              : lang === "RU"
+              ? "Питание от основной сети"
+              : "Powered by the main power supply"}
           </div>
         </div>
 
@@ -69,21 +75,34 @@ export function DgsItem({
             />
           </div>
           <div className="px-3 py-2 text-center text-[0.6rem]">
-            Резервный источник{" "}
+            {lang === "RU" ? "Резервный источник " : "The backup source "}
             {reservPower === "in_work"
-              ? "находится в работе"
+              ? lang === "RU"
+                ? "находится в работе"
+                : "is in operation"
               : reservPower === "ready"
-              ? "готов к пуску"
+              ? lang === "RU"
+                ? "готов к пуску"
+                : "is ready to start"
               : reservPower === "not_ready"
-              ? "не готов к пуску"
-              : "не определён"}
+              ? lang === "RU"
+                ? "не готов к пуску"
+                : "is not ready to start"
+              : lang === "RU"
+              ? "не определён"
+              : "is not defined"}
           </div>
         </div>
       </div>
       <div className=" mx-auto w-11/12 h-px bg-gray-300"></div>
       <div className="h-10 text-center"></div>
       <span className="text-[0.5rem] text-center">
-        Обновлено: {time ? time : "нет информации"}
+        {lang === "RU" ? "Обновлено:  " : "updated:  "}
+        {time
+          ? time
+          : lang === "RU"
+          ? "нет информации"
+          : "no information available"}
       </span>
     </Link>
   );

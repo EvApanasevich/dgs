@@ -5,7 +5,11 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useDebounce } from "use-debounce";
 
-export function Search() {
+type SearchPropsType = {
+  lang: string;
+};
+
+export function Search({ lang }: SearchPropsType) {
   const router = useRouter();
   const [searchText, setSearchText] = useState("");
   const [query] = useDebounce(searchText, 500);
@@ -24,7 +28,7 @@ export function Search() {
         className="text-sm w-64 lg:w-52 h-8 p-4 outline-none"
         value={searchText}
         type="text"
-        placeholder="поиск..."
+        placeholder={lang === "RU" ? "поиск..." : "search..."}
         onChange={(e) => setSearchText(e.target.value)}
         maxLength={30}
       />

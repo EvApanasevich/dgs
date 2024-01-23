@@ -63,8 +63,6 @@ export function Settings({
   const onSubmit = (data: any) => {
     const arrSensors: Array<UpdatedSensor> = [];
 
-    console.log(data);
-
     for (let key in data) {
       sensors.forEach((sensor) => {
         if (sensor.name === key) {
@@ -87,8 +85,6 @@ export function Settings({
     router.refresh();
     setIsOpenModal(false);
   };
-
-  console.log(icons); //////////////////////
 
   return (
     <div className="text-sm">

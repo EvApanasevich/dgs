@@ -9,10 +9,10 @@ export default async function InDetailLayout({
 }: {
   children: React.ReactNode;
 }) {
-//   const session = await getServerSession(authConfig);
-//   const devices: DeviceType[] | undefined = await devicesApi.getDevices(
-//     session?.user.token
-//   );
+  //   const session = await getServerSession(authConfig);
+  //   const devices: DeviceType[] | undefined = await devicesApi.getDevices(
+  //     session?.user.token
+  //   );
 
   return (
     <div className="flex-1 pt-10">
