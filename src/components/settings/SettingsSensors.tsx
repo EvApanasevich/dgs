@@ -14,6 +14,7 @@ import pencilIcon from "../../../public/pencil.png";
 import { useSession } from "next-auth/react";
 import { Icons } from "../icons_svg/Icons";
 import { IconsPopUp } from "../icons_popup/IconsPopUp";
+import { SettingsSvg } from "../icons_svg/SettingsSvg";
 
 type SettingsPropsType = {
   lang: string;
@@ -23,7 +24,7 @@ type SettingsPropsType = {
   settingsSensors: UpdatedSensor[] | undefined;
 };
 
-export function Settings({
+export function SettingsSensors({
   lang,
   email,
   deviceId,
@@ -90,17 +91,23 @@ export function Settings({
 
   return (
     <div className="text-sm">
-      <button className="pl-4 leading-6" onClick={() => setIsOpenModal(true)}>
-        {lang === "RU"
-          ? "Настроить отображение датчиков >>"
-          : "Adjust the display of the sensors"}
-      </button>
+      <div className="" onClick={() => setIsOpenModal(true)}>
+        <SettingsSvg
+          title={
+            lang === "RU"
+              ? "Настройки отображения датчиков"
+              : "Sensor display settings"
+          }
+          color={"#616161"}
+          size={"25"}
+        />
+      </div>
       <Modal active={isOpenModal} setActive={setIsOpenModal}>
         <p className="pb-5">
           <span className="text-lime-600 font-medium">{email}</span>
           {lang === "RU"
-            ? ", сдесь вы можете настроить отображение датчиков и другое"
-            : ", here you can customize the display of sensors and more"}
+            ? ", сдесь вы можете настроить параметры отображения датчиков"
+            : ", here you can adjust the display parameters of the sensors"}
         </p>
 
         <form onSubmit={handleSubmit(onSubmit)}>

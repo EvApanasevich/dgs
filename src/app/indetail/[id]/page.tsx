@@ -5,13 +5,13 @@ import { SensorItem } from "@/components/sensor/SensorItem";
 import { ViewBlock } from "@/components/view_block/ViewBlock";
 import { getServerSession } from "next-auth/next";
 import { authConfig } from "../../../../configs/auth";
-import { Settings } from "@/components/settings/Settings";
-import Image from "next/image";
-import settingsIcon from "../../../../public/settings.png";
+import { SettingsSensors } from "@/components/settings/SettingsSensors";
 import { getSensors } from "./sensor_utils";
 import { getUpdatedSettingsForDevice } from "../../../../lib/actions/settings.actions";
 import { SettingsForDeviceType } from "@/types/types";
 import { getUserSettings } from "../../../../lib/actions/user_settings.actions";
+import { SettingsPower } from "@/components/settings/SettingsPower";
+import { SettingsBackupPower } from "@/components/settings/SettingsBackupPower";
 
 export default async function ObjectInDetail({
   params,
@@ -42,14 +42,6 @@ export default async function ObjectInDetail({
         <p className="flex-1 text-lg leading-6 font-semibold">{`${
           device.name ? device.name : "no name"
         }`}</p>
-        <Image className="w-6 h-6" src={settingsIcon} alt="settings" />
-        <Settings
-          lang={userSettings.language}
-          email={session?.user.email}
-          deviceId={device.id}
-          sensors={sensors}
-          settingsSensors={settingsForDevice?.sensors}
-        />
       </div>
 
       <div className="grid grid-cols-2 gap-4 p-5">
@@ -68,6 +60,15 @@ export default async function ObjectInDetail({
                 ? "Питание от основной сети"
                 : "Powered by the main network"}
             </span>
+          </div>
+          <div className="absolute right-1 top-1">
+            <SettingsPower
+              lang={userSettings.language}
+              email={session?.user.email}
+              deviceId={device.id}
+              sensors={sensors}
+              settingsSensors={settingsForDevice?.sensors}
+            />
           </div>
         </ViewBlock>
         <ViewBlock
@@ -92,6 +93,15 @@ export default async function ObjectInDetail({
                 ? "Резервный источник не готов к пуску"
                 : "The backup source is not ready to start"}
             </span>
+          </div>
+          <div className="absolute right-1 top-1">
+            <SettingsBackupPower
+              lang={userSettings.language}
+              email={session?.user.email}
+              deviceId={device.id}
+              sensors={sensors}
+              settingsSensors={settingsForDevice?.sensors}
+            />
           </div>
         </ViewBlock>
         <ViewBlock
@@ -132,6 +142,15 @@ export default async function ObjectInDetail({
                 )
               );
             })}
+          </div>
+          <div className="absolute right-1 top-1">
+            <SettingsSensors
+              lang={userSettings.language}
+              email={session?.user.email}
+              deviceId={device.id}
+              sensors={sensors}
+              settingsSensors={settingsForDevice?.sensors}
+            />
           </div>
         </ViewBlock>
         <ViewBlock
