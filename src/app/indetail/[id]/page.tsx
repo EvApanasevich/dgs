@@ -65,6 +65,7 @@ export default async function ObjectInDetail({
             <SettingsPower
               lang={userSettings.language}
               email={session?.user.email}
+              userId={session?.user.id}
               deviceId={device.id}
               sensors={sensors}
               settingsSensors={settingsForDevice?.sensors}
@@ -98,6 +99,7 @@ export default async function ObjectInDetail({
             <SettingsBackupPower
               lang={userSettings.language}
               email={session?.user.email}
+              userId={session?.user.id}
               deviceId={device.id}
               sensors={sensors}
               settingsSensors={settingsForDevice?.sensors}
@@ -147,6 +149,7 @@ export default async function ObjectInDetail({
             <SettingsSensors
               lang={userSettings.language}
               email={session?.user.email}
+              userId={session?.user.id}
               deviceId={device.id}
               sensors={sensors}
               settingsSensors={settingsForDevice?.sensors}

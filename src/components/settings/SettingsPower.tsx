@@ -8,10 +8,12 @@ import { SensorType } from "@/types/types";
 import { useForm } from "react-hook-form";
 import { useSession } from "next-auth/react";
 import { SettingsSvg } from "../icons_svg/SettingsSvg";
+import { setPowerSettings } from "../../../lib/actions/power_settings";
 
 type SettingsPropsType = {
   lang: string;
   email: string | undefined;
+  userId: number | undefined;
   deviceId: string;
   sensors: SensorType[];
   settingsSensors: UpdatedSensor[] | undefined;
@@ -20,15 +22,13 @@ type SettingsPropsType = {
 export function SettingsPower({
   lang,
   email,
+  userId,
   deviceId,
   sensors,
   settingsSensors,
 }: SettingsPropsType) {
-  const session = useSession();
   const router = useRouter();
   const [isOpenModal, setIsOpenModal] = useState(false);
-
-  const userId = session.data?.user.id;
 
   const {
     register,
@@ -37,6 +37,14 @@ export function SettingsPower({
   } = useForm<any>();
 
   const onSubmit = () => {
+    setPowerSettings({
+      userId: userId,
+      deviceId: deviceId,
+      powerSettings: [
+        { sensorId: 1, sensorName: "пробег", rate: "км", setValue: "125" },
+        { sensorId: 7, sensorName: "пробегггг", rate: "км", setValue: "222" },
+      ],
+    });
     router.refresh();
     setIsOpenModal(false);
   };
@@ -61,6 +69,14 @@ export function SettingsPower({
             ? ", сдесь вы можете настроить параметры отображения источника питания"
             : ", here you can adjust the display settings of the power supply"}
         </p>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <button
+            className="border-2 border-lime-500 rounded-md p-2"
+            type="submit"
+          >
+            {lang === "RU" ? "Сохранить настройки" : "Save Settings"}
+          </button>
+        </form>
       </Modal>
     </div>
   );

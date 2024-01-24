@@ -19,6 +19,7 @@ import { SettingsSvg } from "../icons_svg/SettingsSvg";
 type SettingsPropsType = {
   lang: string;
   email: string | undefined;
+  userId: number | undefined;
   deviceId: string;
   sensors: SensorType[];
   settingsSensors: UpdatedSensor[] | undefined;
@@ -27,18 +28,18 @@ type SettingsPropsType = {
 export function SettingsSensors({
   lang,
   email,
+  userId,
   deviceId,
   sensors,
   settingsSensors,
 }: SettingsPropsType) {
-  const session = useSession();
   const router = useRouter();
   const params = useParams();
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [icons, setIcons] = useState<Array<{ sensorId: number; icon: number }>>(
     () => initIcons(settingsSensors)
   );
-  const userId = session.data?.user.id;
+
   const {
     register,
     formState: { errors },
