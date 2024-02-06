@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Modal } from "../modal/Modal";
 import {
   UpdatedSensor,
@@ -11,10 +11,10 @@ import { SensorType } from "@/types/types";
 import { useForm } from "react-hook-form";
 import Image from "next/image";
 import pencilIcon from "../../../public/pencil.png";
-import { useSession } from "next-auth/react";
 import { Icons } from "../icons_svg/Icons";
 import { IconsPopUp } from "../icons_popup/IconsPopUp";
 import { SettingsSvg } from "../icons_svg/SettingsSvg";
+import { SuccessModal } from "../success_modal/SuccessModal";
 
 type SettingsPropsType = {
   lang: string;
@@ -39,6 +39,7 @@ export function SettingsSensors({
   const [icons, setIcons] = useState<Array<{ sensorId: number; icon: number }>>(
     () => initIcons(settingsSensors)
   );
+  const [saveOkModal, setSaveOkModal] = useState<boolean>(false);
 
   const {
     register,
@@ -64,7 +65,7 @@ export function SettingsSensors({
     return arrIcons;
   }
 
-  const onSubmit = (data: any) => {
+  const onSubmit = async (data: any) => {
     const arrSensors: Array<UpdatedSensor> = [];
 
     for (let key in data) {
@@ -85,13 +86,23 @@ export function SettingsSensors({
         }
       });
     }
-    updateSettings({ userId, deviceId, arrSensors });
+    const OK = await updateSettings({ userId, deviceId, arrSensors });
+    if (OK) {
+      setTimeout(() => {
+        setTimeout(() => {
+          setSaveOkModal(false);
+        }, 3000);
+        setSaveOkModal(true);
+      }, 500);
+    }
     router.refresh();
     setIsOpenModal(false);
   };
 
   return (
     <div className="text-sm">
+      <SuccessModal saveOkModal={saveOkModal} lang={lang} />
+
       <div className="" onClick={() => setIsOpenModal(true)}>
         <SettingsSvg
           title={

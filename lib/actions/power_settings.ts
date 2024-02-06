@@ -6,7 +6,6 @@ import { connectToDB } from "../mongoose"
 
 export interface PowerSetting {
    sensorId: number
-   sensorName: string
    rate: string
    setValue: string
 }
@@ -17,11 +16,11 @@ interface Params {
    powerSettings: Array<PowerSetting>
 }
 
-export async function setPowerSettings({ userId, deviceId, powerSettings }: Params): Promise<void> {
+export async function setPowerSettings({ userId, deviceId, powerSettings }: Params): Promise<boolean> {
    try {
       connectToDB();
 
-      await PowerSettings.findOneAndUpdate(
+      const result = await PowerSettings.findOneAndUpdate(
          { deviceId: deviceId },
          {
             userId: userId,
@@ -30,12 +29,14 @@ export async function setPowerSettings({ userId, deviceId, powerSettings }: Para
          },
          { upsert: true }
       )
+      return !!result;
+      
    } catch (error: any) {
       throw new Error(`Failed: ${error.message}`)
    }
 }
 
-export async function getPowerSettings(deviceId: string) {
+export async function getPowerSettingsForDevice(deviceId: string) {
    try {
       connectToDB();
 

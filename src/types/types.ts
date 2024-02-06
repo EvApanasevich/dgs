@@ -1,3 +1,4 @@
+import { PowerSetting } from './../../lib/actions/power_settings';
 import { UpdatedSensor } from "../../lib/actions/settings.actions"
 
 export type SensorType = {
@@ -26,5 +27,13 @@ export type DeviceType = {
    deviceId: string
    date: Date
    sensors: Array<UpdatedSensor>
+   userId: string
+ }
+
+ export type PowerSettingsForDeviceType = {
+   _id: string
+   deviceId: string
+   date: Date
+   powerSettings: Array<PowerSetting>
    userId: string
  }

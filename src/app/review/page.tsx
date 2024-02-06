@@ -5,7 +5,6 @@ import { authConfig } from "../../../configs/auth";
 import { DeviceType } from "@/types/types";
 import { Search } from "@/components/search/search";
 import { NavProfile } from "@/components/navbar/nav_profile/NavProfile";
-import { Navigation } from "@/components/navbar/navigation/Navigation";
 import { Language } from "@/components/language/Language";
 import { getUserSettings } from "../../../lib/actions/user_settings.actions";
 
@@ -33,7 +32,7 @@ export default async function Review({
   return (
     <div className="flex flex-col">
       <div className="flex justify-between pt-10 pb-5 md:flex-col-reverse md:items-end">
-        <div className="flex items-center gap-x-10">
+        <div className="flex items-end gap-x-10">
           <Search lang={userSettings.language} />
           <Language lang={userSettings.language} />
         </div>

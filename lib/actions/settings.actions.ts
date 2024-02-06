@@ -20,11 +20,11 @@ interface Params {
    arrSensors: Array<UpdatedSensor>
 }
 
-export async function updateSettings({ userId, deviceId, arrSensors }: Params): Promise<void> {
+export async function updateSettings({ userId, deviceId, arrSensors }: Params): Promise<boolean> {
    try {
       connectToDB();
 
-      await Settings.findOneAndUpdate(
+      const result =  await Settings.findOneAndUpdate(
          { deviceId: deviceId },
          {
             userId: userId,
@@ -33,6 +33,8 @@ export async function updateSettings({ userId, deviceId, arrSensors }: Params): 
          },
          { upsert: true }
       )
+      return !!result;
+
    } catch (error: any) {
       throw new Error(`Failed: ${error.message}`)
    }

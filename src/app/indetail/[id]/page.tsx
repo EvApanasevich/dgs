@@ -8,10 +8,16 @@ import { authConfig } from "../../../../configs/auth";
 import { SettingsSensors } from "@/components/settings/SettingsSensors";
 import { getSensors } from "./sensor_utils";
 import { getUpdatedSettingsForDevice } from "../../../../lib/actions/settings.actions";
-import { SettingsForDeviceType } from "@/types/types";
+import {
+  PowerSettingsForDeviceType,
+  SettingsForDeviceType,
+} from "@/types/types";
 import { getUserSettings } from "../../../../lib/actions/user_settings.actions";
 import { SettingsPower } from "@/components/settings/SettingsPower";
 import { SettingsBackupPower } from "@/components/settings/SettingsBackupPower";
+import { getPowerSettingsForDevice } from "../../../../lib/actions/power_settings";
+import { globalVars } from "@/app/global_vars";
+import { getStatusByPowerSupply } from "@/app/global_funcs";
 
 export default async function ObjectInDetail({
   params,
@@ -35,6 +41,8 @@ export default async function ObjectInDetail({
   const sensors = getSensors(device);
   const settingsForDevice: SettingsForDeviceType | null =
     await getUpdatedSettingsForDevice(device.id);
+  const powerSettings: PowerSettingsForDeviceType | null =
+    await getPowerSettingsForDevice(device.id);
 
   return (
     <div className="container">
@@ -51,14 +59,26 @@ export default async function ObjectInDetail({
               ? "Питание объекта"
               : "The object's power supply"
           }
-          borderColor={"border-lime-500"}
+          borderColor={getStatusByPowerSupply(powerSettings, sensors, "hex")}
         >
           <div className="flex gap-4">
-            <HomeSvg color={`${"#84cc16"}`} size={"32"} />
+            <HomeSvg
+              color={getStatusByPowerSupply(powerSettings, sensors, "hex")}
+              size={"32"}
+            />
             <span className="text-xs">
-              {userSettings.language === "RU"
-                ? "Питание от основной сети"
-                : "Powered by the main network"}
+              {!powerSettings?.powerSettings.length
+                ? userSettings.language === "RU"
+                  ? "Необходимо настроить источник питания"
+                  : "The power supply needs to be set up"
+                : getStatusByPowerSupply(powerSettings, sensors, "status") ===
+                  "main"
+                ? userSettings.language === "RU"
+                  ? "Питание от основной сети"
+                  : "Powered by the main network"
+                : userSettings.language === "RU"
+                ? "Питание не от основной сети"
+                : "Power is not supplied from the main network"}
             </span>
           </div>
           <div className="absolute right-1 top-1">
@@ -69,6 +89,7 @@ export default async function ObjectInDetail({
               deviceId={device.id}
               sensors={sensors}
               settingsSensors={settingsForDevice?.sensors}
+              powerSettings={powerSettings?.powerSettings}
             />
           </div>
         </ViewBlock>
@@ -78,13 +99,10 @@ export default async function ObjectInDetail({
               ? "Резервное электроснабжение"
               : "Backup power supply"
           }
-          borderColor={device.lon > 27 ? "border-lime-500" : "border-red-500"}
+          borderColor={globalVars.colorUndefined}
         >
           <div className="flex gap-4">
-            <GeneratorSvg
-              color={device.lon > 27 ? "#84cc16" : "#ef4444"}
-              size={"32"}
-            />
+            <GeneratorSvg color={globalVars.colorUndefinedHEX} size={"32"} />
             <span className="text-xs">
               {device.lon > 27
                 ? userSettings.language === "RU"
@@ -108,7 +126,7 @@ export default async function ObjectInDetail({
         </ViewBlock>
         <ViewBlock
           title={userSettings.language === "RU" ? "Параметры" : "Parameters"}
-          borderColor={"border-gray-300"}
+          borderColor={globalVars.colorUndefined}
           gridPos={"col-span-2"}
         >
           <div className="flex flex-wrap">
@@ -158,7 +176,7 @@ export default async function ObjectInDetail({
         </ViewBlock>
         <ViewBlock
           title={userSettings.language === "RU" ? "Диспетчер" : "Dispatcher"}
-          borderColor={"border-gray-300"}
+          borderColor={globalVars.colorUndefined}
         >
           <div className="text-xs">
             {userSettings.language === "RU" ? "Диспетчер" : "Dispatcher"}
@@ -166,7 +184,7 @@ export default async function ObjectInDetail({
         </ViewBlock>
         <ViewBlock
           title={userSettings.language === "RU" ? "Сообщения" : "Messages"}
-          borderColor={"border-gray-300"}
+          borderColor={globalVars.colorUndefined}
         >
           <div className="text-xs">
             {userSettings.language === "RU" ? "Сообщения" : "Messages"}

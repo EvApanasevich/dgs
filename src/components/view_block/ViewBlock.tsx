@@ -1,7 +1,6 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { SettingsSvg } from "../icons_svg/SettingsSvg";
 
 type ViewBlockPropsType = {
   children: React.ReactNode;
@@ -19,7 +18,10 @@ export function ViewBlock({
   const router = useRouter();
 
   return (
-    <div className={`${borderColor} ${gridPos} relative border-2 rounded-xl`}>
+    <div
+      style={{ borderColor: borderColor }}
+      className={`${gridPos} relative border-2 rounded-xl`}
+    >
       <span className="absolute inline-block font-medium text-xs -top-2 left-8 px-1 leading-tight bg-white">
         {title}:
       </span>

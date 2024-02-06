@@ -1,10 +1,15 @@
-@tailwind base;
+/* @tailwind base;
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities; */
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
-:root {
-  --foreground-rgb: 0,  0, 0;
+/* :root {
+  --color-positive: rgb(132,204,22);
+  --color-negative: rgb(239,68,68);
+  --color-undefined: rgb(209,213,219);
 }
 
 body {
-}
+} */
