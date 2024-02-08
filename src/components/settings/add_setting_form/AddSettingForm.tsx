@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { UpdatedSensor } from "../../../../lib/actions/settings.actions";
 import { useEffect, useState } from "react";
 
-type AddPowerSettingsFormPropsType = {
+type AddSettingFormPropsType = {
   lang: string;
 
   sensors: SensorType[];
@@ -31,7 +31,7 @@ type AddPowerSettingsFormPropsType = {
   setIsOpenAddForm: (isOpen: boolean) => void;
 };
 
-export function AddPowerSettingsForm({
+export function AddSettingForm({
   lang,
   sensors,
   settingsSensors,
@@ -40,7 +40,7 @@ export function AddPowerSettingsForm({
   setValues,
   setErr,
   setIsOpenAddForm,
-}: AddPowerSettingsFormPropsType) {
+}: AddSettingFormPropsType) {
   const [settingSensorId, setSettingSensorId] = useState<string>("");
   const [existSensorValue, setExistSensorValue] = useState<string | undefined>(
     ""

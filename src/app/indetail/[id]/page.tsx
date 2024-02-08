@@ -9,6 +9,7 @@ import { SettingsSensors } from "@/components/settings/SettingsSensors";
 import { getSensors } from "./sensor_utils";
 import { getUpdatedSettingsForDevice } from "../../../../lib/actions/settings.actions";
 import {
+  BackupPowerSettingsForDeviceType,
   PowerSettingsForDeviceType,
   SettingsForDeviceType,
 } from "@/types/types";
@@ -18,6 +19,7 @@ import { SettingsBackupPower } from "@/components/settings/SettingsBackupPower";
 import { getPowerSettingsForDevice } from "../../../../lib/actions/power_settings";
 import { globalVars } from "@/app/global_vars";
 import { getStatusByPowerSupply } from "@/app/global_funcs";
+import { getBackuppowerSettingsForDevice } from "../../../../lib/actions/backuppower_settings";
 
 export default async function ObjectInDetail({
   params,
@@ -43,6 +45,8 @@ export default async function ObjectInDetail({
     await getUpdatedSettingsForDevice(device.id);
   const powerSettings: PowerSettingsForDeviceType | null =
     await getPowerSettingsForDevice(device.id);
+  const backuppowerSettings: BackupPowerSettingsForDeviceType | null =
+    await getBackuppowerSettingsForDevice(device.id);
 
   return (
     <div className="container">
@@ -89,7 +93,7 @@ export default async function ObjectInDetail({
               deviceId={device.id}
               sensors={sensors}
               settingsSensors={settingsForDevice?.sensors}
-              powerSettings={powerSettings?.powerSettings}
+              appliedSettings={powerSettings?.powerSettings}
             />
           </div>
         </ViewBlock>
@@ -121,6 +125,7 @@ export default async function ObjectInDetail({
               deviceId={device.id}
               sensors={sensors}
               settingsSensors={settingsForDevice?.sensors}
+              appliedSettings={backuppowerSettings?.backuppowerSettings}
             />
           </div>
         </ViewBlock>

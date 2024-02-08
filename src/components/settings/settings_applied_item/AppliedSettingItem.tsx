@@ -8,7 +8,7 @@ import { Icons } from "@/components/icons_svg/Icons";
 import { useState } from "react";
 import { SensorType } from "@/types/types";
 
-type PowerSettingItemPropsType = {
+type AppliedSettingItemPropsType = {
   lang: string;
   val: {
     sensorId: number;
@@ -41,7 +41,7 @@ type PowerSettingItemPropsType = {
   deleteHandler: (sensorId: number) => void;
 };
 
-export function PowerSettingItem({
+export function AppliedSettingItem({
   lang,
   val,
   updatedSensor,
@@ -50,7 +50,7 @@ export function PowerSettingItem({
   err,
   setErr,
   setValues,
-}: PowerSettingItemPropsType) {
+}: AppliedSettingItemPropsType) {
   const [editMode, setEditMode] = useState<boolean>(false);
   const [value, setValue] = useState<string>(val.setValue);
   const [correctVal, setCorrectVal] = useState<boolean>(true);

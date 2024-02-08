@@ -11,20 +11,20 @@ import {
   PowerSetting,
   setPowerSettings,
 } from "../../../lib/actions/power_settings";
-import { PowerSettingItem } from "./settings_power/PowerSettingItem";
-import { AddPowerSettingsForm } from "./add_power_settings_form/AddPowerSettingsForm";
+import { AppliedSettingItem } from "./settings_applied_item/AppliedSettingItem";
+import { AddSettingForm } from "./add_setting_form/AddSettingForm";
 import { SuccessModal } from "../success_modal/SuccessModal";
 import Image from "next/image";
 import arrowIcon from "../../../public/arrow.png";
 
-type SettingsPropsType = {
+type SettingsPowerPropsType = {
   lang: string;
   email: string | undefined;
   userId: number | undefined;
   deviceId: string;
   sensors: SensorType[];
   settingsSensors: UpdatedSensor[] | undefined;
-  powerSettings: PowerSetting[] | undefined;
+  appliedSettings: PowerSetting[] | undefined;
 };
 
 export function SettingsPower({
@@ -34,8 +34,8 @@ export function SettingsPower({
   deviceId,
   sensors,
   settingsSensors,
-  powerSettings,
-}: SettingsPropsType) {
+  appliedSettings,
+}: SettingsPowerPropsType) {
   const router = useRouter();
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
   const [isOpenAddForm, setIsOpenAddForm] = useState<boolean>(false);
@@ -52,9 +52,9 @@ export function SettingsPower({
   const [saveOkModal, setSaveOkModal] = useState<boolean>(false);
 
   useEffect(() => {
-    if (powerSettings) {
+    if (appliedSettings) {
       setValues([]);
-      powerSettings.forEach((pow) => {
+      appliedSettings.forEach((pow) => {
         setValues((prev) => [
           ...prev,
           {
@@ -67,7 +67,7 @@ export function SettingsPower({
         ]);
       });
     }
-  }, [powerSettings]);
+  }, [appliedSettings]);
 
   const {
     register,
@@ -151,7 +151,7 @@ export function SettingsPower({
             {values.length !== 0 ? (
               values.map((val) => {
                 return (
-                  <PowerSettingItem
+                  <AppliedSettingItem
                     key={val.sensorId}
                     lang={lang}
                     val={val}
@@ -198,7 +198,7 @@ export function SettingsPower({
         </div>
 
         {isOpenAddForm && (
-          <AddPowerSettingsForm
+          <AddSettingForm
             lang={lang}
             sensors={sensors}
             settingsSensors={settingsSensors}
