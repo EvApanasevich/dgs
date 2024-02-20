@@ -2,7 +2,7 @@
 import Image from "next/image";
 import searchIcon from "../../../public/search.png";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useDebounce } from "use-debounce";
 
 type SearchPropsType = {
@@ -11,14 +11,15 @@ type SearchPropsType = {
 
 export function Search({ lang }: SearchPropsType) {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [searchText, setSearchText] = useState("");
   const [query] = useDebounce(searchText, 500);
 
   useEffect(() => {
     if (!query) {
-      router.push("/review");
+      router.push(`/review?page=1`);
     } else {
-      router.push(`/review?search=${query.toLowerCase()}`);
+      router.push(`/review?search=${query.toLowerCase()}&page=1`);
     }
   }, [query, router]);
 

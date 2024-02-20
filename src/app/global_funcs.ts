@@ -1,16 +1,22 @@
-import { PowerSettingsForDeviceType, SensorType } from "@/types/types";
+import {
+  BackupPowerSettingsForDeviceType,
+  PowerSettingsForDeviceType,
+  SensorType,
+} from "@/types/types";
 import { globalVars } from "./global_vars";
+import { PowerSetting } from "../../lib/actions/power_settings";
+import { BackupPowerSetting } from "../../lib/actions/backuppower_settings";
 
 export const getStatusByPowerSupply = (
-  powerSettings: PowerSettingsForDeviceType | null,
+  settings: Array<PowerSetting> | Array<BackupPowerSetting> | undefined,
   sensors: SensorType[],
   request: string
 ) => {
   let result: Array<number> = [];
   let response: string = "";
 
-  if (powerSettings?.powerSettings.length) {
-    powerSettings?.powerSettings.forEach((ps) => {
+  if (settings?.length) {
+    settings.forEach((ps) => {
       let value = sensors.find((s) => ps.sensorId === s.id)?.value;
 
       if (ps.setValue.includes("-")) {

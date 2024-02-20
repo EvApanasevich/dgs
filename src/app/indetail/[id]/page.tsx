@@ -63,11 +63,19 @@ export default async function ObjectInDetail({
               ? "Питание объекта"
               : "The object's power supply"
           }
-          borderColor={getStatusByPowerSupply(powerSettings, sensors, "hex")}
+          borderColor={getStatusByPowerSupply(
+            powerSettings?.powerSettings,
+            sensors,
+            "hex"
+          )}
         >
           <div className="flex gap-4">
             <HomeSvg
-              color={getStatusByPowerSupply(powerSettings, sensors, "hex")}
+              color={getStatusByPowerSupply(
+                powerSettings?.powerSettings,
+                sensors,
+                "hex"
+              )}
               size={"32"}
             />
             <span className="text-xs">
@@ -75,8 +83,11 @@ export default async function ObjectInDetail({
                 ? userSettings.language === "RU"
                   ? "Необходимо настроить источник питания"
                   : "The power supply needs to be set up"
-                : getStatusByPowerSupply(powerSettings, sensors, "status") ===
-                  "main"
+                : getStatusByPowerSupply(
+                    powerSettings.powerSettings,
+                    sensors,
+                    "status"
+                  ) === "main"
                 ? userSettings.language === "RU"
                   ? "Питание от основной сети"
                   : "Powered by the main network"
@@ -103,10 +114,21 @@ export default async function ObjectInDetail({
               ? "Резервное электроснабжение"
               : "Backup power supply"
           }
-          borderColor={globalVars.colorUndefined}
+          borderColor={getStatusByPowerSupply(
+            backuppowerSettings?.backuppowerSettings,
+            sensors,
+            "hex"
+          )}
         >
           <div className="flex gap-4">
-            <GeneratorSvg color={globalVars.colorUndefinedHEX} size={"32"} />
+            <GeneratorSvg
+              color={getStatusByPowerSupply(
+                backuppowerSettings?.backuppowerSettings,
+                sensors,
+                "hex"
+              )}
+              size={"32"}
+            />
             <span className="text-xs">
               {device.lon > 27
                 ? userSettings.language === "RU"
