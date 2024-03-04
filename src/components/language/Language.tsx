@@ -20,7 +20,7 @@ export function Language({ lang }: LanguagePropsType) {
   };
 
   return (
-    <div className="flex h-5 border-2 border-gray-200 rounded-xl truncate text-red-500">
+    <div className="flex h-5 border-2 border-gray-200 rounded-xl truncate text-red-500 lg820:mb-3">
       <button
         onClick={() => onClickHandler("RU")}
         className={`${

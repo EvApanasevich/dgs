@@ -106,7 +106,8 @@ export function AppliedSettingItem({
     if (newValue.length < 30) {
       if (keyCode === "Enter" && correctVal) {
         onClickApplyHandler(newValue);
-      } else error(newValue);
+      }
+      // else error(newValue);
     }
   };
   const onChangeInputHandler = (inpVal: string) => {

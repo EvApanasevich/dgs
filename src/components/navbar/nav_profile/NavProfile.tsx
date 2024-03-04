@@ -23,18 +23,18 @@ export function NavProfile({ lang }: NavProfilePropsType) {
   const session = useSession();
 
   return (
-    <div className="flex md:pb-2 sm:flex-col-reverse sm:items-end">
-      <div className="flex ">
-        <div className="text-gray-800 text-xs leading-8">
+    <div className="flex md:pb-2 sm:flex-col-reverse sm:items-end lg820:items-end lg820:flex-col-reverse">
+      <div className="flex sm:flex-col sm:items-end">
+        <div className="text-gray-800 text-xs leading-8 sm:leading-3 sm:pt-3">
           {getGreeting(lang)}
         </div>
-        <div className="text-gray-900 font-medium leading-8 text-sm pl-3 pr-10 lg:pr-3">
+        <div className="text-gray-900 font-medium leading-8 text-sm pl-3 pr-10 xl:pr-3 lg820:pr-0">
           {session?.data ? session?.data?.user?.email : ""}
         </div>
       </div>
 
       {session?.data ? (
-        <span className="h-8 w-16 text-center  border border-gray-500 rounded">
+        <span className="h-8 w-16 text-center  border border-gray-500 rounded ">
           <Link
             href="#"
             onClick={() => signOut({ callbackUrl: "/" })}

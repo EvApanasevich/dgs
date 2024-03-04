@@ -4,6 +4,8 @@ import searchIcon from "../../../public/search.png";
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useDebounce } from "use-debounce";
+import { useTranslation } from "next-i18next";
+import { appWithTranslation } from "next-i18next";
 
 type SearchPropsType = {
   lang: string;
@@ -24,9 +26,13 @@ export function Search({ lang }: SearchPropsType) {
   }, [query, router]);
 
   return (
-    <div className="flex items-center justify-between h-8 border border-gray-500 rounded px-1">
+    <div
+      className={`${
+        searchText && "shadow-3xl"
+      } flex items-center justify-between h-8 border border-gray-500 rounded px-1`}
+    >
       <input
-        className="text-sm w-64 lg:w-52 h-6 px-3 outline-none"
+        className={"text-sm w-64 xl:w-48 lg:w-52 h-6 px-3 outline-none"}
         value={searchText}
         type="text"
         placeholder={lang === "RU" ? "поиск..." : "search..."}

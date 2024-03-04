@@ -49,14 +49,14 @@ export default async function ObjectInDetail({
     await getBackuppowerSettingsForDevice(device.id);
 
   return (
-    <div className="container">
+    <div className="container md:px-0">
       <div className="flex pt-10">
         <p className="flex-1 text-lg leading-6 font-semibold">{`${
           device.name ? device.name : "no name"
         }`}</p>
       </div>
 
-      <div className="grid grid-cols-2 gap-4 p-5">
+      <div className="grid grid-cols-2 gap-4 p-5 md:px-0">
         <ViewBlock
           title={
             userSettings.language === "RU"
@@ -68,6 +68,7 @@ export default async function ObjectInDetail({
             sensors,
             "hex"
           )}
+          gridPos={"lg:col-span-2"}
         >
           <div className="flex gap-4">
             <HomeSvg
@@ -119,6 +120,7 @@ export default async function ObjectInDetail({
             sensors,
             "hex"
           )}
+          gridPos={"lg:col-span-2"}
         >
           <div className="flex gap-4">
             <GeneratorSvg
@@ -156,7 +158,7 @@ export default async function ObjectInDetail({
           borderColor={globalVars.colorUndefined}
           gridPos={"col-span-2"}
         >
-          <div className="flex flex-wrap">
+          <div className="flex flex-wrap sm:justify-center">
             {sensors.map((sensor) => {
               const visible = settingsForDevice
                 ? settingsForDevice?.sensors.find((sen) => sen.id === sensor.id)
@@ -204,6 +206,7 @@ export default async function ObjectInDetail({
         <ViewBlock
           title={userSettings.language === "RU" ? "Диспетчер" : "Dispatcher"}
           borderColor={globalVars.colorUndefined}
+          gridPos={"lg:col-span-2"}
         >
           <div className="text-xs">
             {userSettings.language === "RU" ? "Диспетчер" : "Dispatcher"}
@@ -212,6 +215,7 @@ export default async function ObjectInDetail({
         <ViewBlock
           title={userSettings.language === "RU" ? "Сообщения" : "Messages"}
           borderColor={globalVars.colorUndefined}
+          gridPos={"lg:col-span-2"}
         >
           <div className="text-xs">
             {userSettings.language === "RU" ? "Сообщения" : "Messages"}

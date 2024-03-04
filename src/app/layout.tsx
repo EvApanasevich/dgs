@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Head from "next/head";
 import { Inter } from "next/font/google";
 import { AppProvider } from "@/providers/AppProvider";
+import { appWithTranslation } from "next-i18next";
 
 const inter = Inter({
   subsets: ["cyrillic", "latin"],
