@@ -216,7 +216,7 @@ export function AddSettingForm({
           </span>
           <span
             onClick={onClickApplyHandler}
-            className="ml-4 p-1 font-semibold text-lime-700 border border-gray-700 rounded cursor-pointer sm:ml-0"
+            className="inline-block ml-4 p-1 text-lime-700 border border-gray-700 rounded cursor-pointer sm:ml-0"
           >
             {lang === "RU" ? "Применить" : "Apply"}
           </span>

@@ -137,7 +137,7 @@ export function AppliedSettingItem({
           val.deleted && "opacity-20 bg-transparent"
         } flex w-auto justify-between border-b border-gray-500 sm:flex-col`}
       >
-        <div className="flex sm:py-2 sm:justify-between">
+        <div className="flex sm:pt-2 sm:justify-between">
           <div className="px-2">
             {updatedSensor ? updatedSensor.newName : sensor?.name}
           </div>
