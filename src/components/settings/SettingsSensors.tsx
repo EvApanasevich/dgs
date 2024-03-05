@@ -171,8 +171,8 @@ export function SettingsSensors({
                               ? "Обязательно к заполнению"
                               : "Required to be filled in",
                           maxLength: {
-                            value: 40,
-                            message: "Не более 40 символов",
+                            value: 50,
+                            message: "Не более 50 символов",
                           },
                           value: settingsSensors
                             ? settingsSensors.find((s) => s.id === sensor.id)

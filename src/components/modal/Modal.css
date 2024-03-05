@@ -25,6 +25,8 @@
     background-color: white;
     min-width: 70vw;
     max-width: 90vw;
+    max-height: 70vh;
+    overflow-y: auto;
     transform: scale(0.5);
     transition: 0.4s all;
     font-size: 12px;

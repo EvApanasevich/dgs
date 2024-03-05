@@ -141,15 +141,17 @@ export function AddSettingForm({
   }, [settingSensorId, existSensorValue]);
 
   return (
-    <div className={"flex p-2 pt-3 items-start"}>
-      <label className="pr-3" htmlFor={"sensors"}>
+    <div className={"flex p-2 pt-3 items-start sm:flex-col sm:p-0"}>
+      <label className="pr-3 sm:py-2" htmlFor={"sensors"}>
         {lang === "RU" ? "Датчик: " : "Sensor: "}
       </label>
 
       <select
         id={"sensors"}
         {...register("sensorName")}
-        className={"h-7 border border-gray-700 rounded px-2 cursor-pointer"}
+        className={
+          "w-full h-7 border border-gray-700 rounded px-2 cursor-pointer"
+        }
         onChange={(s) => onChangeSelectHandler(s.currentTarget.value)}
       >
         <option value="">
@@ -172,8 +174,8 @@ export function AddSettingForm({
             })}
       </select>
       {settingSensorId && (
-        <span className="flex items-start pl-3">
-          <div className="flex">
+        <span className="flex items-start pl-3 sm:flex-col sm:pl-0">
+          <div className="flex sm:py-4">
             <span className="pr-2">
               {lang === "RU" ? "Значение:" : "Value:"}
             </span>
@@ -191,7 +193,7 @@ export function AddSettingForm({
             />
           </div>
 
-          <span className="pl-4 w-64 text-gray-500">
+          <span className="pl-4 w-64 text-gray-500 sm:w-full sm:pb-3">
             {lang === "RU"
               ? "Установите необходимое значение. Пример установки:"
               : "Set the required value. Example of setting a range of values:"}
@@ -214,7 +216,7 @@ export function AddSettingForm({
           </span>
           <span
             onClick={onClickApplyHandler}
-            className="ml-4 font-semibold text-lime-700 border-b-2 border-lime-700 cursor-pointer"
+            className="ml-4 p-1 font-semibold text-lime-700 border border-gray-700 rounded cursor-pointer sm:ml-0"
           >
             {lang === "RU" ? "Применить" : "Apply"}
           </span>

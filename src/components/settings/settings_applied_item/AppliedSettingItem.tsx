@@ -130,24 +130,28 @@ export function AppliedSettingItem({
   };
 
   return (
-    <li className="flex justify-between relative py-2  pl-8">
+    <li className="flex justify-between relative py-2 pl-8 sm:pl-0 sm:flex-col sm:py-4">
       {!val.exist && <div className="absolute left-3">+</div>}
       <div
         className={`${val.exist && "bg-gray-100"} ${
           val.deleted && "opacity-20 bg-transparent"
-        } flex w-72 justify-between border-b border-gray-500`}
+        } flex w-auto justify-between border-b border-gray-500 sm:flex-col`}
       >
-        <div className="px-2">
-          {updatedSensor ? updatedSensor.newName : sensor?.name}
+        <div className="flex sm:py-2 sm:justify-between">
+          <div className="px-2">
+            {updatedSensor ? updatedSensor.newName : sensor?.name}
+          </div>
+          <div className="sm:pr-2">
+            <Icons
+              icon={updatedSensor ? updatedSensor.icon : 1}
+              color={"#84cc16"}
+              size={"25"}
+            />
+          </div>
         </div>
-        <div>
-          <Icons
-            icon={updatedSensor ? updatedSensor.icon : 1}
-            color={"#84cc16"}
-            size={"25"}
-          />
-        </div>
-        <span>{lang === "RU" ? "значение: " : "value: "}</span>
+        <span className="sm:pl-2">
+          {lang === "RU" ? "Значение: " : "Value: "}
+        </span>
         {editMode ? (
           <input
             className={`${
@@ -165,7 +169,7 @@ export function AppliedSettingItem({
           <div className="px-2">{value}</div>
         )}
       </div>
-      <div className="flex">
+      <div className="flex sm:justify-end sm:pt-2">
         {!editMode && !val.deleted && (
           <Image
             onClick={() => onClickEditHandler(val.sensorId)}
