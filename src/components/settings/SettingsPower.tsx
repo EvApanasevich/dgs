@@ -122,7 +122,7 @@ export function SettingsPower({
   };
 
   return (
-    <div className="text-sm">
+    <div className="">
       <SuccessModal saveOkModal={saveOkModal} lang={lang} />
 
       <div className="" onClick={() => setIsOpenModal(true)}>
