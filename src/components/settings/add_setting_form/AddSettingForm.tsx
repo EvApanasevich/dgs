@@ -174,11 +174,9 @@ export function AddSettingForm({
             })}
       </select>
       {settingSensorId && (
-        <span className="flex items-start pl-3 sm:flex-col sm:pl-0">
+        <div className="flex items-start pl-3 sm:flex-col sm:pl-0">
           <div className="flex sm:py-4">
-            <span className="pr-2">
-              {lang === "RU" ? "Значение:" : "Value:"}
-            </span>
+            <div className="pr-2">{lang === "RU" ? "Значение:" : "Value:"}</div>
             <input
               onChange={(e) => onChangeInputHandler(e.currentTarget.value)}
               onKeyDown={(e) => onKeyDownHandler(e.code)}
@@ -214,13 +212,13 @@ export function AddSettingForm({
                 : '4) The exact value: "12.5";'}
             </div>
           </span>
-          <span
+          <div
             onClick={onClickApplyHandler}
-            className="inline-block ml-4 p-1 text-lime-700 border border-gray-700 rounded cursor-pointer sm:ml-0"
+            className="ml-4 p-1 text-lime-700 border border-gray-700 rounded cursor-pointer sm:ml-0"
           >
             {lang === "RU" ? "Применить" : "Apply"}
-          </span>
-        </span>
+          </div>
+        </div>
       )}
     </div>
   );
