@@ -143,7 +143,7 @@ export function SettingsBackupPower({
             ? ", сдесь вы можете настроить параметры отображения источника питания"
             : ", here you can adjust the display settings of the power supply"}
         </p>
-        <div className="flex">
+        <div className="flex  flex-col">
           <div className="pr-4">
             {lang === "RU" ? "Существующие настройки:" : "Existing settings"}
           </div>

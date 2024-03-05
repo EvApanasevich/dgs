@@ -130,18 +130,17 @@ export function AppliedSettingItem({
   };
 
   return (
-    <li className="flex justify-between relative py-2 pl-8 sm:pl-0 sm:flex-col sm:py-4">
-      {!val.exist && <div className="absolute left-3">+</div>}
+    <li className="flex justify-between relative pl-0 flex-col py-4">
       <div
-        className={`${val.exist && "bg-gray-100"} ${
-          val.deleted && "opacity-20 bg-transparent"
-        } flex w-auto justify-between border-b border-gray-500 sm:flex-col`}
+        className={`${val.exist && "bg-gray-100"} 
+                    ${val.deleted && "opacity-20 bg-transparent"} 
+                    flex w-auto justify-between border-b border-gray-500 flex-col`}
       >
-        <div className="flex sm:pt-2 sm:justify-between">
+        <div className="flex pt-2 justify-between">
           <div className="px-2">
             {updatedSensor ? updatedSensor.newName : sensor?.name}
           </div>
-          <div className="sm:pr-2">
+          <div className="pr-2">
             <Icons
               icon={updatedSensor ? updatedSensor.icon : 1}
               color={"#84cc16"}
@@ -149,14 +148,12 @@ export function AppliedSettingItem({
             />
           </div>
         </div>
-        <span className="sm:pl-2">
-          {lang === "RU" ? "Значение: " : "Value: "}
-        </span>
+        <span className="pl-2">{lang === "RU" ? "Значение: " : "Value: "}</span>
         {editMode ? (
           <input
             className={`${
               correctVal ? "text-lime-700" : "text-red-700"
-            } border border-gray-700 rounded font-medium w-16 px-2`}
+            } border border-gray-700 rounded outline-none font-medium w-60 px-2`}
             onChange={(e) => onChangeInputHandler(e.currentTarget.value)}
             onBlur={(e) => onBlurHandler(e.currentTarget.value)}
             onKeyDown={(e) => onKeyDownHandler(e.code, e.currentTarget.value)}
@@ -169,7 +166,7 @@ export function AppliedSettingItem({
           <div className="px-2">{value}</div>
         )}
       </div>
-      <div className="flex sm:justify-end sm:pt-2">
+      <div className="flex justify-end pt-2">
         {!editMode && !val.deleted && (
           <Image
             onClick={() => onClickEditHandler(val.sensorId)}

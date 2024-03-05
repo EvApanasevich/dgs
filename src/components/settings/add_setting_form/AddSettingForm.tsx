@@ -141,8 +141,8 @@ export function AddSettingForm({
   }, [settingSensorId, existSensorValue]);
 
   return (
-    <div className={"flex p-2 pt-3 items-start sm:flex-col sm:p-0"}>
-      <label className="pr-3 sm:py-2" htmlFor={"sensors"}>
+    <div className={"flex items-start flex-col"}>
+      <label className="pr-3 py-2" htmlFor={"sensors"}>
         {lang === "RU" ? "Датчик: " : "Sensor: "}
       </label>
 
@@ -150,7 +150,7 @@ export function AddSettingForm({
         id={"sensors"}
         {...register("sensorName")}
         className={
-          "w-full h-7 border border-gray-700 rounded px-2 cursor-pointer"
+          "h-7 border border-gray-700 rounded outline-none px-2 cursor-pointer sm:w-full"
         }
         onChange={(s) => onChangeSelectHandler(s.currentTarget.value)}
       >
@@ -174,15 +174,17 @@ export function AddSettingForm({
             })}
       </select>
       {settingSensorId && (
-        <div className="flex items-start pl-3 sm:flex-col sm:pl-0">
-          <div className="flex sm:py-4">
-            <div className="pr-2">{lang === "RU" ? "Значение:" : "Value:"}</div>
+        <div className="flex items-start flex-col">
+          <div className="flex py-4">
+            <div className="pr-2 pl-4">
+              {lang === "RU" ? "Значение:" : "Value:"}
+            </div>
             <input
               onChange={(e) => onChangeInputHandler(e.currentTarget.value)}
               onKeyDown={(e) => onKeyDownHandler(e.code)}
               className={`${
                 correctVal ? "text-lime-700" : "text-red-700"
-              } border border-gray-700 rounded px-2 font-medium w-28 h-7 text-sm`}
+              } border border-gray-700 rounded outline-none px-2 font-medium w-36 h-7 text-sm`}
               type={"text"}
               placeholder={existSensorValue}
               autoFocus={true}
@@ -191,7 +193,7 @@ export function AddSettingForm({
             />
           </div>
 
-          <span className="pl-4 w-64 text-gray-500 sm:w-full sm:pb-3">
+          <span className="pl-4 w-64 text-gray-500 sm:w-full pb-3">
             {lang === "RU"
               ? "Установите необходимое значение. Пример установки:"
               : "Set the required value. Example of setting a range of values:"}
@@ -214,9 +216,9 @@ export function AddSettingForm({
           </span>
           <div
             onClick={onClickApplyHandler}
-            className="ml-4 p-1 text-lime-700 border border-gray-700 rounded cursor-pointer sm:ml-0"
+            className="ml-4 p-1 text-lime-700 border border-gray-700 rounded cursor-pointer xl:ml-0"
           >
-            {lang === "RU" ? "Применить" : "Apply"}
+            {lang === "RU" ? "Добавить значение" : "Add value"}
           </div>
         </div>
       )}

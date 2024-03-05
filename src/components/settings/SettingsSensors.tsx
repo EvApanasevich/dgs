@@ -126,44 +126,21 @@ export function SettingsSensors({
           <ul>
             {sensors.map((sensor) => {
               return (
-                <li key={sensor.id} className="flex items-center pb-2">
-                  <div className="flex-1 leading-[2.85rem]">
-                    <div>{sensor.name}</div>
+                <li
+                  key={sensor.id}
+                  className="flex flex-col border-b border-gray-500 mb-4 pb-3"
+                >
+                  <div className="flex pb-2 justify-between lg:flex-col">
+                    <div className="font-medium">{sensor.name}</div>
+                    <div className="flex text-end">{sensor.value}</div>
                   </div>
-
-                  <IconsPopUp
-                    lang={lang}
-                    sensorId={sensor.id}
-                    icons={icons}
-                    setIcons={setIcons}
-                  />
-
-                  <Icons
-                    icon={icons.find((ic) => ic.sensorId === sensor.id)?.icon}
-                    color={"red"}
-                    size={"25"}
-                  />
-
-                  <label className="px-3" htmlFor={`${sensor.id}`}>
-                    {lang === "RU"
-                      ? "отображать датчик: "
-                      : "display the sensor "}
-                  </label>
-                  <input
-                    {...register("visible")}
-                    id={`${sensor.id}`}
-                    type="checkbox"
-                    value={`${sensor.name}`}
-                    defaultChecked={
-                      settingsSensors
-                        ? settingsSensors.find((s) => s.id === sensor.id)
-                            ?.visible
-                        : true
-                    }
-                  />
-
-                  <div>
-                    <div className="flex border border-gray-500 rounded-md p-1 mx-3">
+                  <div className="flex pb-4 lg:flex-col">
+                    <label className="pr-3 leading-8" htmlFor={`${sensor.id}`}>
+                      {lang === "RU"
+                        ? "Изменить имя датчика: "
+                        : "Change name of the sensor: "}
+                    </label>
+                    <div className="flex border border-gray-500 rounded-md p-1 lg:justify-between lg:w-2/3 sm:w-full">
                       <input
                         {...register(`${sensor.name}`, {
                           required:
@@ -179,6 +156,7 @@ export function SettingsSensors({
                                 ?.newName
                             : sensor.name,
                         })}
+                        id={`${sensor.id}`}
                         className="outline-none pl-2"
                         type="text"
                       />
@@ -194,8 +172,43 @@ export function SettingsSensors({
                       }`}</p>
                     )}
                   </div>
+                  <div className="flex lg:flex-col">
+                    <div className="flex pr-5 pb-3">
+                      <IconsPopUp
+                        lang={lang}
+                        sensorId={sensor.id}
+                        icons={icons}
+                        setIcons={setIcons}
+                      />
 
-                  <div className="flex-1 leading-[2.85rem]">{sensor.value}</div>
+                      <Icons
+                        icon={
+                          icons.find((ic) => ic.sensorId === sensor.id)?.icon
+                        }
+                        color={"red"}
+                        size={"25"}
+                      />
+                    </div>
+                    <div className="flex">
+                      <label className="px-3" htmlFor={`${sensor.id}`}>
+                        {lang === "RU"
+                          ? "Отображать датчик: "
+                          : "display the sensor "}
+                      </label>
+                      <input
+                        {...register("visible")}
+                        id={`${sensor.id}`}
+                        type="checkbox"
+                        value={`${sensor.name}`}
+                        defaultChecked={
+                          settingsSensors
+                            ? settingsSensors.find((s) => s.id === sensor.id)
+                                ?.visible
+                            : true
+                        }
+                      />
+                    </div>
+                  </div>
                 </li>
               );
             })}

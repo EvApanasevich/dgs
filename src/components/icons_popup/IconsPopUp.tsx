@@ -29,12 +29,12 @@ export function IconsPopUp({
 
   return (
     <div className="relative">
-      <span
-        className="cursor-pointer px-3 py-1 mr-2 border border-gray-500"
+      <div
+        className="cursor-pointer px-3 mr-2 h-6 text-lime-700 rounded border border-gray-500"
         onClick={() => setIsOpenIcons(!isOpenIcons)}
       >
-        {lang === "RU" ? "сменить иконку:" : "change the icon"}
-      </span>
+        {lang === "RU" ? "Поменять иконку:" : "Сhange the icon"}
+      </div>
       {isOpenIcons && (
         <div
           onMouseLeave={() => setIsOpenIcons(!isOpenIcons)}
