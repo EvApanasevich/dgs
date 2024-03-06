@@ -216,7 +216,7 @@ export function AddSettingForm({
           </span>
           <div
             onClick={onClickApplyHandler}
-            className="ml-4 p-1 text-lime-700 border border-gray-700 rounded cursor-pointer xl:ml-0"
+            className="text-xs ml-4 p-1 text-lime-700 border border-gray-700 rounded cursor-pointer xl:ml-0"
           >
             {lang === "RU" ? "Добавить значение" : "Add value"}
           </div>
