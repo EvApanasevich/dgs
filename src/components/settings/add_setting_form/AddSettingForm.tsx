@@ -142,15 +142,15 @@ export function AddSettingForm({
 
   return (
     <div className={"flex items-start flex-col"}>
-      <label className="pr-3 py-2" htmlFor={"sensors"}>
+      <span className="pr-3 py-2">
         {lang === "RU" ? "Датчик: " : "Sensor: "}
-      </label>
+      </span>
 
       <select
         id={"sensors"}
         {...register("sensorName")}
         className={
-          "h-7 border border-gray-700 rounded outline-none px-2 cursor-pointer sm:w-full"
+          "h-7 border border-gray-500 rounded outline-none px-2 cursor-pointer sm:w-full"
         }
         onChange={(s) => onChangeSelectHandler(s.currentTarget.value)}
       >
@@ -180,11 +180,12 @@ export function AddSettingForm({
               {lang === "RU" ? "Значение:" : "Value:"}
             </div>
             <input
+              id={"value"}
               onChange={(e) => onChangeInputHandler(e.currentTarget.value)}
               onKeyDown={(e) => onKeyDownHandler(e.code)}
               className={`${
                 correctVal ? "text-lime-700" : "text-red-700"
-              } border border-gray-700 rounded outline-none px-2 font-medium w-36 h-7 text-sm`}
+              } border border-gray-500 rounded outline-none px-2 font-medium w-36 h-7 text-sm`}
               type={"text"}
               placeholder={existSensorValue}
               autoFocus={true}
@@ -216,9 +217,9 @@ export function AddSettingForm({
           </span>
           <div
             onClick={onClickApplyHandler}
-            className="text-xs ml-4 p-1 text-lime-700 border border-gray-700 rounded cursor-pointer xl:ml-0"
+            className="text-xs ml-4 p-1 text-lime-700 border border-gray-500 rounded cursor-pointer xl:ml-0"
           >
-            {lang === "RU" ? "Добавить значение" : "Add value"}
+            {lang === "RU" ? "Добавить" : "Add value"}
           </div>
         </div>
       )}

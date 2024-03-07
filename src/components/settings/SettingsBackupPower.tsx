@@ -144,7 +144,7 @@ export function SettingsBackupPower({
             : ", here you can adjust the display settings of the power supply"}
         </p>
         <div className="flex  flex-col">
-          <div className="pr-4">
+          <div className="pr-4 pb-4">
             {lang === "RU" ? "Существующие настройки:" : "Existing settings"}
           </div>
           <ul>
@@ -180,7 +180,7 @@ export function SettingsBackupPower({
         </div>
         <div
           onClick={OpenCloseEditFormHandler}
-          className="flex cursor-pointer align-center items-center bg-gray-100 mt-5 pl-2"
+          className="flex h-10 cursor-pointer align-center items-center bg-gray-100 mt-5 pl-2"
         >
           <div className={"max-w-32 p-1"}>
             {lang === "RU" ? "Добавить настройки" : "add settings"}

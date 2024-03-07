@@ -132,10 +132,18 @@ export default async function ObjectInDetail({
               size={"32"}
             />
             <span className="text-xs">
-              {device.lon > 27
+              {!backuppowerSettings?.backuppowerSettings.length
+                ? userSettings.language === "RU"
+                  ? "Необходимо настроить резервный источник питания"
+                  : "It is necessary to set up a backup power supply"
+                : getStatusByPowerSupply(
+                    backuppowerSettings?.backuppowerSettings,
+                    sensors,
+                    "status"
+                  ) === "main"
                 ? userSettings.language === "RU"
                   ? "Резервный источник готов к пуску"
-                  : "The backup source is ready to launch"
+                  : "The backup source is ready to start"
                 : userSettings.language === "RU"
                 ? "Резервный источник не готов к пуску"
                 : "The backup source is not ready to start"}

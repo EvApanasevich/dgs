@@ -44,7 +44,7 @@ export default async function Review({
 
   return (
     <div className="flex flex-col">
-      <div className="flex justify-between pt-10 pb-6 md:flex-col-reverse md:items-end border-b border-gray-500">
+      <div className="flex justify-between pt-8 pb-6 md:flex-col-reverse md:items-end border-b border-gray-500">
         <div className="flex items-end gap-x-10 xl:gap-x-4 lg820:flex-col-reverse lg820:justify-between lg820:items-start md:items-end">
           <Search lang={userSettings.language} />
           <Language lang={userSettings.language} />

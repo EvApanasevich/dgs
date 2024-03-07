@@ -66,7 +66,6 @@ export function Pagination({
   const onClickPageHandler = (currentPage: number) => {
     setIsPandingPage(true);
     setCurrentPage(currentPage);
-    console.log(currentPage);
     if (searchParams.get("search")) {
       router.push(
         `/review?search=${searchParams.get("search")}&page=${currentPage}`
@@ -99,6 +98,7 @@ export function Pagination({
         ) : (
           pages.map((p) => (
             <span
+              key={p}
               aria-disabled={isPandingPage}
               onClick={(e) => onClickPageHandler(p)}
               className={`${

@@ -32,6 +32,7 @@ export function Search({ lang }: SearchPropsType) {
       } flex items-center justify-between h-8 border border-gray-500 rounded px-1`}
     >
       <input
+        id={"1"}
         className={"text-sm w-64 xl:w-48 lg:w-52 h-6 px-3 outline-none"}
         value={searchText}
         type="text"

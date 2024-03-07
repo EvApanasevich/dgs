@@ -118,9 +118,7 @@ export function AppliedSettingItem({
 
     if (isCorrect) {
       if (inpVal.includes("-")) {
-        console.log(inpVal);
         const arrRange = inpVal.split("-");
-        console.log(Number(arrRange[0]) >= Number(arrRange[1]));
         Number(arrRange[0]) >= Number(arrRange[1])
           ? setCorrectVal(false)
           : setCorrectVal(true);
@@ -130,7 +128,7 @@ export function AppliedSettingItem({
   };
 
   return (
-    <li className="flex justify-between relative pl-0 flex-col py-4">
+    <li className="flex justify-between relative pl-0 flex-col pb-4">
       <div
         className={`${val.exist && "bg-gray-100"} 
                     ${val.deleted && "opacity-20 bg-transparent"} 
@@ -153,7 +151,7 @@ export function AppliedSettingItem({
           <input
             className={`${
               correctVal ? "text-lime-700" : "text-red-700"
-            } border border-gray-700 rounded outline-none font-medium w-60 px-2`}
+            } border border-gray-500 rounded outline-none font-medium w-60 px-2`}
             onChange={(e) => onChangeInputHandler(e.currentTarget.value)}
             onBlur={(e) => onBlurHandler(e.currentTarget.value)}
             onKeyDown={(e) => onKeyDownHandler(e.code, e.currentTarget.value)}

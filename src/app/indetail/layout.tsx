@@ -18,7 +18,7 @@ export default async function InDetailLayout({
   //   );
 
   return (
-    <div className="flex-1 pt-10">
+    <div className="flex-1 pt-8">
       <div className="border-b border-gray-500 pb-5 pt-2.5">
         <Link
           href="/review"
