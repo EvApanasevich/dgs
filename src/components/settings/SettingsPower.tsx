@@ -180,7 +180,7 @@ export function SettingsPower({
         </div>
         <div
           onClick={OpenCloseEditFormHandler}
-          className="flex cursor-pointer align-center items-center bg-gray-100 mt-5 mb-3 pl-2"
+          className="flex h-10 cursor-pointer align-center items-center bg-gray-100 mt-5 mb-3 pl-2"
         >
           <div className={"max-w-32 p-1"}>
             {lang === "RU" ? "Добавить настройки" : "add settings"}
