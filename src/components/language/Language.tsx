@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { updateLanguage } from "../../../lib/actions/user_settings.actions";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { updateLanguage } from '../../../lib/actions/user_settings.actions';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 type LanguagePropsType = {
   lang: string;
@@ -20,21 +20,11 @@ export function Language({ lang }: LanguagePropsType) {
   };
 
   return (
-    <div className="flex h-5 border-2 border-gray-200 rounded-xl truncate text-red-500 lg820:mb-3">
-      <button
-        onClick={() => onClickHandler("RU")}
-        className={`${
-          lang !== "RU" && "bg-gray-200  text-gray-700"
-        } pl-3 pr-1  text-xs`}
-      >
+    <div className="flex border-2 border-gray-200 rounded-xl truncate text-red-500 lg820:mb-3">
+      <button onClick={() => onClickHandler('RU')} className={`${lang !== 'RU' && 'bg-gray-200  text-gray-700'} pl-3 pr-1 font-semibold`}>
         RU
       </button>
-      <button
-        onClick={() => onClickHandler("EN")}
-        className={`${
-          lang !== "EN" && "bg-gray-200  text-gray-700"
-        } pl-1 pr-3 text-xs`}
-      >
+      <button onClick={() => onClickHandler('EN')} className={`${lang !== 'EN' && 'bg-gray-200  text-gray-700'} pl-1 pr-3 font-semibold`}>
         EN
       </button>
     </div>

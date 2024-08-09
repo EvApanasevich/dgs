@@ -1,35 +1,22 @@
-import { getServerSession } from "next-auth/next";
-import { devicesApi } from "../api/devices/api_devices";
-import { authConfig } from "../../../configs/auth";
-import { DeviceType } from "@/types/types";
-import Link from "next/link";
-import { getUserSettings } from "../../../lib/actions/user_settings.actions";
+import { getServerSession } from 'next-auth/next';
+import { authConfig } from '../../../configs/auth';
+import Link from 'next/link';
+import { getUserSettings } from '../../../lib/actions/user_settings.actions';
 
-export default async function InDetailLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default async function InDetailLayout({ children }: { children: React.ReactNode }) {
   const session = await getServerSession(authConfig);
   const userSettings = await getUserSettings(session?.user.id);
-  //   const session = await getServerSession(authConfig);
-  //   const devices: DeviceType[] | undefined = await devicesApi.getDevices(
-  //     session?.user.token
-  //   );
 
   return (
-    <div className="flex-1 pt-8">
-      <div className="border-b border-gray-500 pb-5 pt-2.5">
+    <div className="flex-1 pt-8 sm:pt-4">
+      <div className="border-b border-gray-300 pb-5 pt-2.5">
         <Link
           href="/review"
-          className=" text-sm text-gray-800 hover:text-gray-400"
+          className="font-semibold border border-gray-600 text-stone-50 hover:bg-stone-50 hover:text-orange-600 bg-gray-600 px-3 py-2 rounded transition-all sm:text-xs"
         >
-          {userSettings.language === "RU"
-            ? "<< Вернуться к списку доступных объектов"
-            : "<< Go back to the list of available objects"}
+          {userSettings.language === 'RU' ? '<< Вернуться к списку доступных объектов' : '<< Go back to the list of available objects'}
         </Link>
       </div>
-      {/* <ObjectList devices={devices} /> */}
       {children}
     </div>
   );

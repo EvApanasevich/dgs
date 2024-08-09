@@ -1,7 +1,9 @@
-export default function Loading() {
+import { Loading } from '@/components/loading/Loading';
+
+export default function LoadingMain() {
   return (
-    <div className=" text-center text-2xl pt-16 text-sky-700 font-semibold">
-      LOADING...
+    <div className="h-screen flex justify-center items-center">
+      <Loading width={'w-10'} height={'h-10'} />
     </div>
   );
 }

@@ -1,8 +1,8 @@
 export const globalVars = {
-    colorPositive: "lime-500",
-    colorNegative: "red-500",
-    colorUndefined: "gray-300",
-    colorPositiveHEX: "#84cc16",
-    colorNegativeHEX: "#ef4444",
-    colorUndefinedHEX: "#d1d5db",
-}
+  colorPositive: 'lime-600',
+  colorNegative: 'orange-600',
+  colorUndefined: 'gray-400',
+  colorPositiveHEX: '#65a30d',
+  colorNegativeHEX: '#ea580c',
+  colorUndefinedHEX: '#9ca3af',
+};
