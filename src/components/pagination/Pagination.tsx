@@ -63,35 +63,45 @@ export function Pagination({ countDevices, countObjectsInPage }: PaginationProps
   };
 
   return (
-    <div className={'flex justify-center pt-3 text-gray-600'}>
+    <div className={'flex justify-center pt-5 text-gray-600'}>
       <div className={'flex h-6'}>
-        <div className={'w-16'}>
-          {pageBlocks > 1 && currentPageBlock !== 1 ? (
-            <span onClick={onClickPrevHandler} className="cursor-pointer pr-5">
-              {'< ...'}
-            </span>
-          ) : null}
+        <div className={'w-16 text-right'}>
+          <button
+            onClick={onClickPrevHandler}
+            disabled={pageBlocks > 1 && currentPageBlock === 1}
+            className={`${pageBlocks > 1 && currentPageBlock === 1 ? 'opacity-25' : ''} cursor-pointer pr-3 text-xl font-semibold align-middle`}
+          >
+            {'< ...'}
+          </button>
         </div>
         {isPandingPage ? (
           <Loading width={'w-5'} height={'h-5'} />
         ) : (
-          pages.map(p => (
-            <span
-              key={p}
-              aria-disabled={isPandingPage}
-              onClick={e => onClickPageHandler(p)}
-              className={`${currentPage === p ? 'text-red-500 border-b-2 border-red-500 font-semibold' : ''} px-1 cursor-pointer`}
-            >
-              {p}
-            </span>
-          ))
+          <div>
+            {pages.map(p => (
+              <span
+                key={p}
+                aria-disabled={isPandingPage}
+                onClick={e => onClickPageHandler(p)}
+                className={`${
+                  currentPage === p ? 'text-red-500 border-b-2 border-red-500 font-semibold' : ''
+                } px-1 text-lg font-semibold cursor-pointer`}
+              >
+                {p}
+              </span>
+            ))}
+          </div>
         )}
         <div className={'w-16'}>
-          {pageBlocks > 1 && currentPageBlock !== pageBlocks ? (
-            <span onClick={onClickNextHandler} className="cursor-pointer pl-5">
-              {'... >'}
-            </span>
-          ) : null}
+          <button
+            onClick={onClickNextHandler}
+            disabled={pageBlocks > 1 && currentPageBlock === pageBlocks}
+            className={`${
+              pageBlocks > 1 && currentPageBlock === pageBlocks ? 'opacity-25' : ''
+            } cursor-pointer pl-3 text-xl font-semibold align-middle`}
+          >
+            {'... >'}
+          </button>
         </div>
       </div>
     </div>

@@ -43,7 +43,7 @@ export default async function Review({ searchParams }: { searchParams: { [key: s
       <Pagination countDevices={filteredDevices?.length} countObjectsInPage={COUNT_OBJECTS_IN_PAGE} />
       <div
         className="grid gap-x-8 gap-y-10 grid-cols-3 
-      xl:grid-cols-2 xl:px-24 lg820:px-12 lg:px-0 px-12 py-6 md:grid-cols-1 md:px-20 sm:px-0 
+      xl:grid-cols-2 xl:px-24 lg820:px-12 lg:px-0  pt-8 md:grid-cols-1 md:px-20 sm:px-0 
       scroll-auto"
       >
         {devices &&
