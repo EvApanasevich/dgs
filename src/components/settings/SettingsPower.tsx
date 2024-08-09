@@ -13,7 +13,6 @@ import { AddSettingForm } from './add_setting_form/AddSettingForm';
 import { SuccessModal } from '../success_modal/SuccessModal';
 import Image from 'next/image';
 import arrowIcon from '../../../public/arrow.png';
-import { sideFetch } from '../../../fetch';
 
 type SettingsPowerPropsType = {
   lang: string;
@@ -40,10 +39,6 @@ export function SettingsPower({ lang, email, userId, deviceId, sensors, settings
   >([]);
   const [err, setErr] = useState<string>('');
   const [saveOkModal, setSaveOkModal] = useState<boolean>(false);
-
-  ///////////////////////////////////////////////////////
-  const [file, setFile] = useState(null); //// sending file
-  ///////////////////////////////////////////////////////
 
   useEffect(() => {
     if (appliedSettings) {
@@ -73,15 +68,7 @@ export function SettingsPower({ lang, email, userId, deviceId, sensors, settings
     },
   });
 
-  const handleFileChange = (e: any) => {
-    console.log(e.target.files);
-    setFile(e.target.files[0]);
-  };
-
   const onSubmit = async (data: any) => {
-    console.log(file);
-    sideFetch.putFile(file);
-
     const setValues = values
       .filter(v => !v.deleted)
       .map(v => ({
