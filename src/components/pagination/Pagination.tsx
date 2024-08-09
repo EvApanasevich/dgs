@@ -68,8 +68,8 @@ export function Pagination({ countDevices, countObjectsInPage }: PaginationProps
         <div className={'w-16 text-right'}>
           <button
             onClick={onClickPrevHandler}
-            disabled={pageBlocks > 1 && currentPageBlock === 1}
-            className={`${pageBlocks > 1 && currentPageBlock === 1 ? 'opacity-25' : ''} cursor-pointer pr-3 text-xl font-semibold align-middle`}
+            disabled={pageBlocks >= 1 && currentPageBlock === 1}
+            className={`${pageBlocks >= 1 && currentPageBlock === 1 ? 'opacity-25' : ''} cursor-pointer pr-3 text-xl font-semibold align-middle`}
           >
             {'< ...'}
           </button>
@@ -95,9 +95,9 @@ export function Pagination({ countDevices, countObjectsInPage }: PaginationProps
         <div className={'w-16'}>
           <button
             onClick={onClickNextHandler}
-            disabled={pageBlocks > 1 && currentPageBlock === pageBlocks}
+            disabled={pageBlocks >= 1 && currentPageBlock === pageBlocks}
             className={`${
-              pageBlocks > 1 && currentPageBlock === pageBlocks ? 'opacity-25' : ''
+              pageBlocks >= 1 && currentPageBlock === pageBlocks ? 'opacity-25' : ''
             } cursor-pointer pl-3 text-xl font-semibold align-middle`}
           >
             {'... >'}
