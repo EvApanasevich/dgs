@@ -25,7 +25,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {/* <header className="sticky top-0 z-[100]">
             <Navbar />
           </header> */}
-          <main className="container mx-auto max-w-5xl min-h-screen flex-col items-center border-l border-r border-gray-300 bg-stone-50 sm:px-1">
+          <main className="container mx-auto max-w-5xl min-h-screen flex-col items-center border-l border-r border-gray-300 bg-stone-50 sm:px-2">
             {/* <div className="flex">
               <Navigation />
             </div> */}
