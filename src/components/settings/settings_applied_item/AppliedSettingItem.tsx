@@ -115,7 +115,7 @@ export function AppliedSettingItem({
                     flex w-full justify-between md:flex-col md:flex-col-reverse`}
       >
         <div className={`${val.deleted && 'opacity-30 bg-transparent'} flex pt-1 justify-between flex-col`}>
-          <div className="px-2 text-orange-700 text-lg font-bold">
+          <div className="px-2 pb-2 text-orange-700 text-lg font-bold">
             {!val.exist && <span className="pr-3 text-xl font-bold text-lime-500">{'+'}</span>}
             {updatedSensor ? updatedSensor.newName : sensor?.name}
           </div>
@@ -129,7 +129,7 @@ export function AppliedSettingItem({
                 id={'input'}
                 className={`${
                   correctEditingValue ? 'text-lime-700 bg-lime-100' : 'text-red-700 bg-red-100'
-                } w-60 px-2 text-base rounded outline-none font-medium`}
+                } w-42 pl-2 mr-2 text-base rounded outline-none font-medium sm:w-full`}
                 onChange={e => onChangeInputHandler(e.currentTarget.value)}
                 onBlur={e => onBlurHandler(e.currentTarget.value)}
                 onKeyDown={e => onKeyDownHandler(e.code, e.currentTarget.value)}
@@ -151,8 +151,8 @@ export function AppliedSettingItem({
         </div>
 
         <div className="flex md:justify-between">
-          <div className={`${val.deleted && 'opacity-30 bg-transparent'} flex justify-center items-center pl-1 pr-8`}>
-            <Icons icon={updatedSensor ? updatedSensor.icon : 1} color={'#84cc16'} size={'46'} />
+          <div className={`${val.deleted && 'opacity-30 bg-transparent'} flex justify-center items-center pl-1 pr-8 md:pt-2 pl-2`}>
+            <Icons icon={updatedSensor ? updatedSensor.icon : 1} color={'#4b5563'} size={'46'} />
           </div>
 
           <div className="w-10">

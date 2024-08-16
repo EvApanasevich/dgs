@@ -25,7 +25,7 @@ export function IconsPopUp({ lang, sensorId, icons, setIcons }: IconsPopUpPropsT
           {lang === 'RU' ? 'Иконка:' : 'Icon'}
         </div>
         <div onClick={() => setIsOpenIcons(!isOpenIcons)} className="cursor-pointer">
-          <Icons icon={icons.find(ic => ic.sensorId === sensorId)?.icon} color={'red'} size={'40'} />
+          <Icons icon={icons.find(ic => ic.sensorId === sensorId)?.icon} color={'#4b5563'} size={'40'} />
         </div>
       </div>
 
