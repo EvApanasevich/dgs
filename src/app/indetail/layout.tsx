@@ -8,7 +8,7 @@ export default async function InDetailLayout({ children }: { children: React.Rea
   const userSettings = await getUserSettings(session?.user.id);
 
   return (
-    <div className="flex-1 pt-8 sm:pt-4">
+    <div className="flex-1 py-8 sm:py-4">
       <div className="border-b border-gray-300 pb-5 pt-2.5">
         <Link
           href="/review"
