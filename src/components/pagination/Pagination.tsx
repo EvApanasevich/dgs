@@ -73,7 +73,7 @@ export function Pagination({ countDevices, countObjectsInPage }: PaginationProps
               pageBlocks >= 1 && currentPageBlock === 1 ? 'opacity-25 cursor-default' : ''
             } block cursor-pointer pr-3 text-xl font-semibold align-middle`}
           >
-            {'< ...'}
+            {'<...'}
           </button>
         </div>
         {isPandingPage ? (
@@ -101,7 +101,7 @@ export function Pagination({ countDevices, countObjectsInPage }: PaginationProps
               pageBlocks >= 1 && currentPageBlock === pageBlocks ? 'opacity-25 cursor-default' : ''
             } block cursor-pointer pl-3 text-xl font-semibold align-middle`}
           >
-            {'... >'}
+            {'...>'}
           </button>
         </div>
       </div>
