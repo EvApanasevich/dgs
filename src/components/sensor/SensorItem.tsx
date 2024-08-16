@@ -30,7 +30,7 @@ export function SensorItem({ id, icon, deviceId, name, rate, value }: SensorItem
       className="w-28 pb-4 flex flex-col justify-between text-center"
     >
       <div className="flex flex-1 justify-center items-center pb-2 text-[0.75rem] text-gray-700 font-semibold leading-3">
-        <div>{name}</div>
+        <div className="overflow-hidden">{name}</div>
       </div>
       <div className="mx-auto">
         <Icons icon={icon} color={isValueNull ? '#d1d5db' : '#4b5563'} size={'35'} />

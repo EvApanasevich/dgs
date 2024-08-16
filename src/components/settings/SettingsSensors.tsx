@@ -115,7 +115,7 @@ export function SettingsSensors({ lang, email, userId, deviceId, sensors, settin
               return (
                 <li key={sensor.id} className="flex flex-col p-2 border border-gray-500 rounded-md mb-4">
                   <div className="flex pb-2 justify-between lg:flex-col">
-                    <div className="font-bold text-lg text-orange-700">{sensorName}</div>
+                    <div className="font-bold text-lg text-orange-700 overflow-hidden">{sensorName}</div>
                     <div className="flex font-medium text-end text-lime-700">{sensor.value !== null ? sensor.value : 0}</div>
                   </div>
                   <div className="">

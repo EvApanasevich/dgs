@@ -115,7 +115,7 @@ export function AppliedSettingItem({
                     flex w-full justify-between md:flex-col md:flex-col-reverse`}
       >
         <div className={`${val.deleted && 'opacity-30 bg-transparent'} flex pt-1 justify-between flex-col`}>
-          <div className="px-2 pb-2 text-orange-700 text-lg font-bold">
+          <div className="px-2 pb-2 text-orange-700 text-lg font-bold overflow-hidden">
             {!val.exist && <span className="pr-3 text-xl font-bold text-lime-500">{'+'}</span>}
             {updatedSensor ? updatedSensor.newName : sensor?.name}
           </div>
