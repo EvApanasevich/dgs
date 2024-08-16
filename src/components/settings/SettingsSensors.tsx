@@ -1,20 +1,18 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { Modal } from "../modal/Modal";
-import {
-  UpdatedSensor,
-  updateSettings,
-} from "../../../lib/actions/settings.actions";
-import { useParams, useRouter } from "next/navigation";
-import { SensorType } from "@/types/types";
-import { useForm } from "react-hook-form";
-import Image from "next/image";
-import pencilIcon from "../../../public/pencil.png";
-import { Icons } from "../icons_svg/Icons";
-import { IconsPopUp } from "../icons_popup/IconsPopUp";
-import { SettingsSvg } from "../icons_svg/SettingsSvg";
-import { SuccessModal } from "../success_modal/SuccessModal";
+import { useState } from 'react';
+import { Modal } from '../modal/Modal';
+import { UpdatedSensor, updateSettings } from '../../../lib/actions/settings.actions';
+import { useParams, useRouter } from 'next/navigation';
+import { SensorType } from '@/types/types';
+import { useForm } from 'react-hook-form';
+
+import { Icons } from '../icons_svg/Icons';
+import { IconsPopUp } from '../icons_popup/IconsPopUp';
+import { SettingsSvg } from '../icons_svg/SettingsSvg';
+import { SuccessModal } from '../success_modal/SuccessModal';
+import { Loading } from '../loading/Loading';
+import { InputInSettings } from '../input_in_settings/InputInSettings';
 
 type SettingsPropsType = {
   lang: string;
@@ -25,20 +23,12 @@ type SettingsPropsType = {
   settingsSensors: UpdatedSensor[] | undefined;
 };
 
-export function SettingsSensors({
-  lang,
-  email,
-  userId,
-  deviceId,
-  sensors,
-  settingsSensors,
-}: SettingsPropsType) {
+export function SettingsSensors({ lang, email, userId, deviceId, sensors, settingsSensors }: SettingsPropsType) {
   const router = useRouter();
   const params = useParams();
   const [isOpenModal, setIsOpenModal] = useState(false);
-  const [icons, setIcons] = useState<Array<{ sensorId: number; icon: number }>>(
-    () => initIcons(settingsSensors)
-  );
+  const [isSavingSettings, setIsSavingSettings] = useState<boolean>(false);
+  const [icons, setIcons] = useState<Array<{ sensorId: number; icon: number }>>(() => initIcons(settingsSensors));
   const [saveOkModal, setSaveOkModal] = useState<boolean>(false);
 
   const {
@@ -49,11 +39,11 @@ export function SettingsSensors({
 
   function initIcons(settingsSensors: UpdatedSensor[] | undefined) {
     const arrIcons: Array<{ sensorId: number; icon: number }> = [];
-    sensors.forEach((sensor) => {
+    sensors.forEach(sensor => {
       if (settingsSensors) {
         arrIcons.push({
           sensorId: sensor.id,
-          icon: Number(settingsSensors.find((s) => s.id === sensor.id)?.icon),
+          icon: Number(settingsSensors.find(s => s.id === sensor.id)?.icon),
         });
       } else {
         arrIcons.push({
@@ -66,13 +56,16 @@ export function SettingsSensors({
   }
 
   const onSubmit = async (data: any) => {
+    console.log(data);
+
+    setIsSavingSettings(true);
     const arrSensors: Array<UpdatedSensor> = [];
 
     for (let key in data) {
-      sensors.forEach((sensor) => {
+      sensors.forEach(sensor => {
         if (sensor.name === key) {
           const visible = data.visible.includes(key);
-          const icon = icons.find((ic) => ic.sensorId === sensor.id)?.icon;
+          const icon = icons.find(ic => ic.sensorId === sensor.id)?.icon;
 
           arrSensors.push({
             icon: icon,
@@ -86,15 +79,21 @@ export function SettingsSensors({
         }
       });
     }
+
     const OK = await updateSettings({ userId, deviceId, arrSensors });
+
     if (OK) {
+      setIsSavingSettings(false);
       setTimeout(() => {
         setTimeout(() => {
           setSaveOkModal(false);
         }, 3000);
         setSaveOkModal(true);
       }, 500);
+    } else {
+      setIsSavingSettings(false);
     }
+
     router.refresh();
     setIsOpenModal(false);
   };
@@ -104,111 +103,37 @@ export function SettingsSensors({
       <SuccessModal saveOkModal={saveOkModal} lang={lang} />
 
       <div className="" onClick={() => setIsOpenModal(true)}>
-        <SettingsSvg
-          title={
-            lang === "RU"
-              ? "Настройки отображения датчиков"
-              : "Sensor display settings"
-          }
-          color={"#616161"}
-          size={"25"}
-        />
+        <SettingsSvg title={lang === 'RU' ? 'Настройки отображения датчиков' : 'Sensor display settings'} color={'#616161'} size={'25'} />
       </div>
-      <Modal active={isOpenModal} setActive={setIsOpenModal}>
-        <p className="pb-5">
-          <span className="text-lime-600 font-medium">{email}</span>
-          {lang === "RU"
-            ? ", сдесь вы можете настроить параметры отображения датчиков"
-            : ", here you can adjust the display parameters of the sensors"}
-        </p>
 
+      <Modal active={isOpenModal} setActive={setIsOpenModal}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <ul>
-            {sensors.map((sensor) => {
-              return (
-                <li
-                  key={sensor.id}
-                  className="flex flex-col border-b border-gray-500 mb-4"
-                >
-                  <div className="flex pb-2 justify-between lg:flex-col">
-                    <div className="font-medium text-sm text-gray-700">
-                      {sensor.name}
-                    </div>
-                    <div className="flex text-end text-lime-700">
-                      {sensor.value !== null ? sensor.value : 0}
-                    </div>
-                  </div>
-                  <div className="bg-gray-100 p-2">
-                    <div className="flex pb-4 lg:flex-col">
-                      <span className="pr-3 leading-8">
-                        {lang === "RU"
-                          ? "Изменить имя датчика: "
-                          : "Change name of the sensor: "}
-                      </span>
-                      <div className="flex border border-gray-500 rounded-md p-1 lg:justify-between lg:w-2/3 sm:w-full">
-                        <input
-                          {...register(`${sensor.name}`, {
-                            required:
-                              lang === "RU"
-                                ? "Обязательно к заполнению"
-                                : "Required to be filled in",
-                            maxLength: {
-                              value: 50,
-                              message: "Не более 50 символов",
-                            },
-                            value: settingsSensors
-                              ? settingsSensors.find((s) => s.id === sensor.id)
-                                  ?.newName
-                              : sensor.name,
-                          })}
-                          className="outline-none pl-2 bg-gray-100"
-                          type="text"
-                        />
-                        <Image
-                          className="w-5 h-5"
-                          src={pencilIcon}
-                          alt="pencil"
-                        />
-                      </div>
-                      {errors[`${sensor.name}`] && (
-                        <p className="text-red-400 pl-4">{`${
-                          errors[`${sensor.name}`]?.message
-                        }`}</p>
-                      )}
-                    </div>
-                    <div className="flex lg:flex-col">
-                      <div className="flex pr-5 lg:pb-3">
-                        <IconsPopUp
-                          lang={lang}
-                          sensorId={sensor.id}
-                          icons={icons}
-                          setIcons={setIcons}
-                        />
+            {sensors.map(sensor => {
+              const sensorName = settingsSensors ? settingsSensors.find(s => s.id === sensor.id)?.newName : sensor.name;
 
-                        <Icons
-                          icon={
-                            icons.find((ic) => ic.sensorId === sensor.id)?.icon
-                          }
-                          color={"red"}
-                          size={"25"}
-                        />
-                      </div>
+              return (
+                <li key={sensor.id} className="flex flex-col p-2 border border-gray-500 rounded-md mb-4">
+                  <div className="flex pb-2 justify-between lg:flex-col">
+                    <div className="font-bold text-lg text-orange-700">{sensorName}</div>
+                    <div className="flex font-medium text-end text-lime-700">{sensor.value !== null ? sensor.value : 0}</div>
+                  </div>
+                  <div className="">
+                    <InputInSettings register={register} errors={errors} lang={lang} sensor={sensor} sensorName={sensorName} />
+
+                    <div className="flex flex-col">
+                      <IconsPopUp lang={lang} sensorId={sensor.id} icons={icons} setIcons={setIcons} />
+
                       <div className="flex">
-                        <span className="px-3 leading-6 lg:pl-0">
-                          {lang === "RU"
-                            ? "Отображать датчик: "
-                            : "display the sensor "}
+                        <span className="text-base font-semibold text-gray-700 pr-3">
+                          {lang === 'RU' ? 'Отображать датчик: ' : 'display the sensor '}
                         </span>
                         <input
-                          {...register("visible")}
+                          {...register('visible')}
                           type="checkbox"
                           value={`${sensor.name}`}
-                          defaultChecked={
-                            settingsSensors
-                              ? settingsSensors.find((s) => s.id === sensor.id)
-                                  ?.visible
-                              : true
-                          }
+                          defaultChecked={settingsSensors ? settingsSensors.find(s => s.id === sensor.id)?.visible : true}
+                          className="w-5 h-5"
                         />
                       </div>
                     </div>
@@ -217,11 +142,18 @@ export function SettingsSensors({
               );
             })}
           </ul>
+
           <button
-            className="border-2 border-lime-500 rounded-md p-2"
+            className={`relative p-2 mt-5 text-base text-stone-50 font-semibold border border-gray-700 bg-gray-700 rounded hover:bg-stone-50 hover:text-gray-700 sm:text-xs transition-all`}
+            disabled={isSavingSettings}
             type="submit"
           >
-            {lang === "RU" ? "Сохранить настройки" : "Save Settings"}
+            {lang === 'RU' ? 'Сохранить настройки' : 'Save Settings'}
+            {isSavingSettings && (
+              <div className="absolute top-1 right-1">
+                <Loading width={'w-3.5'} height={'h-3.5'} />
+              </div>
+            )}
           </button>
         </form>
       </Modal>

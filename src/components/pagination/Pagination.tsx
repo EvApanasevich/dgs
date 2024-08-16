@@ -65,11 +65,13 @@ export function Pagination({ countDevices, countObjectsInPage }: PaginationProps
   return (
     <div className={'flex justify-center pt-5 text-gray-600'}>
       <div className={'flex h-6'}>
-        <div className={'w-16 text-right'}>
+        <div className={'w-12 text-right'}>
           <button
             onClick={onClickPrevHandler}
             disabled={pageBlocks >= 1 && currentPageBlock === 1}
-            className={`${pageBlocks >= 1 && currentPageBlock === 1 ? 'opacity-25' : ''} cursor-pointer pr-3 text-xl font-semibold align-middle`}
+            className={`${
+              pageBlocks >= 1 && currentPageBlock === 1 ? 'opacity-25 cursor-default' : ''
+            } cursor-pointer pr-3 text-xl font-semibold align-middle`}
           >
             {'< ...'}
           </button>
@@ -81,23 +83,22 @@ export function Pagination({ countDevices, countObjectsInPage }: PaginationProps
             {pages.map(p => (
               <span
                 key={p}
-                aria-disabled={isPandingPage}
                 onClick={e => onClickPageHandler(p)}
                 className={`${
-                  currentPage === p ? 'text-red-500 border-b-2 border-red-500 font-semibold' : ''
-                } px-1 text-lg font-semibold cursor-pointer`}
+                  currentPage === p ? 'text-gray-700 bg-gray-300 leading-[1.5rem] rounded-full font-bold' : ''
+                } inline-block min-w-[1.5rem] h-6 px-1 text-lg text-center leading-[1.5rem] font-semibold cursor-pointer`}
               >
                 {p}
               </span>
             ))}
           </div>
         )}
-        <div className={'w-16'}>
+        <div className={'w-12'}>
           <button
             onClick={onClickNextHandler}
             disabled={pageBlocks >= 1 && currentPageBlock === pageBlocks}
             className={`${
-              pageBlocks >= 1 && currentPageBlock === pageBlocks ? 'opacity-25' : ''
+              pageBlocks >= 1 && currentPageBlock === pageBlocks ? 'opacity-25 cursor-default' : ''
             } cursor-pointer pl-3 text-xl font-semibold align-middle`}
           >
             {'... >'}

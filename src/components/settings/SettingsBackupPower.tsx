@@ -1,21 +1,19 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { Modal } from "../modal/Modal";
-import { UpdatedSensor } from "../../../lib/actions/settings.actions";
-import { useRouter } from "next/navigation";
-import { SensorType } from "@/types/types";
-import { useForm } from "react-hook-form";
-import { SettingsSvg } from "../icons_svg/SettingsSvg";
-import { SuccessModal } from "../success_modal/SuccessModal";
-import Image from "next/image";
-import arrowIcon from "../../../public/arrow.png";
-import { AppliedSettingItem } from "./settings_applied_item/AppliedSettingItem";
-import { AddSettingForm } from "./add_setting_form/AddSettingForm";
-import {
-  BackupPowerSetting,
-  setBackupPowerSettings,
-} from "../../../lib/actions/backuppower_settings";
+import { useEffect, useState } from 'react';
+import { Modal } from '../modal/Modal';
+import { UpdatedSensor } from '../../../lib/actions/settings.actions';
+import { useRouter } from 'next/navigation';
+import { SensorType } from '@/types/types';
+import { useForm } from 'react-hook-form';
+import { SettingsSvg } from '../icons_svg/SettingsSvg';
+import { SuccessModal } from '../success_modal/SuccessModal';
+import Image from 'next/image';
+import arrowIcon from '../../../public/arrow.png';
+import { AppliedSettingItem } from './settings_applied_item/AppliedSettingItem';
+import { AddSettingForm } from './add_setting_form/AddSettingForm';
+import { BackupPowerSetting, setBackupPowerSettings } from '../../../lib/actions/backuppower_settings';
+import { Loading } from '../loading/Loading';
 
 type SettingsBackupPowerPropsType = {
   lang: string;
@@ -27,18 +25,11 @@ type SettingsBackupPowerPropsType = {
   appliedSettings: BackupPowerSetting[] | undefined;
 };
 
-export function SettingsBackupPower({
-  lang,
-  email,
-  userId,
-  deviceId,
-  sensors,
-  settingsSensors,
-  appliedSettings,
-}: SettingsBackupPowerPropsType) {
+export function SettingsBackupPower({ lang, email, userId, deviceId, sensors, settingsSensors, appliedSettings }: SettingsBackupPowerPropsType) {
   const router = useRouter();
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
   const [isOpenAddForm, setIsOpenAddForm] = useState<boolean>(false);
+  const [isSavingSettings, setIsSavingSettings] = useState<boolean>(false);
   const [values, setValues] = useState<
     Array<{
       sensorId: number;
@@ -48,14 +39,17 @@ export function SettingsBackupPower({
       deleted: boolean;
     }>
   >([]);
-  const [err, setErr] = useState<string>("");
+  const [correctVal, setCorrectVal] = useState<boolean>(true);
+  const [correctEditingValue, setCorrectEditingValue] = useState<boolean>(true);
+  const [err, setErr] = useState<string>('');
   const [saveOkModal, setSaveOkModal] = useState<boolean>(false);
+  const [wasChangedValue, setWasChangedValue] = useState<boolean>(false);
 
   useEffect(() => {
     if (appliedSettings) {
       setValues([]);
-      appliedSettings.forEach((pow) => {
-        setValues((prev) => [
+      appliedSettings.forEach(pow => {
+        setValues(prev => [
           ...prev,
           {
             sensorId: pow.sensorId,
@@ -75,32 +69,36 @@ export function SettingsBackupPower({
     handleSubmit,
   } = useForm<any>({
     defaultValues: {
-      sensorName: "",
+      sensorName: '',
     },
   });
 
   const onSubmit = async (data: any) => {
     const setValues = values
-      .filter((v) => !v.deleted)
-      .map((v) => ({
+      .filter(v => !v.deleted)
+      .map(v => ({
         sensorId: v.sensorId,
         rate: v.rate,
         setValue: v.setValue,
       }));
 
     if (values.length) {
+      setIsSavingSettings(true);
       const OK = await setBackupPowerSettings({
         userId: userId,
         deviceId: deviceId,
         backuppowerSettings: setValues,
       });
       if (OK) {
+        setIsSavingSettings(false);
         setTimeout(() => {
           setTimeout(() => {
             setSaveOkModal(false);
           }, 3000);
           setSaveOkModal(true);
         }, 500);
+      } else {
+        setIsSavingSettings(false);
       }
     }
 
@@ -110,14 +108,14 @@ export function SettingsBackupPower({
   };
 
   const EditHandler = (sensorId: number) => {
-    console.log("edit", sensorId);
+    console.log('edit', sensorId);
   };
   const DeleteHandler = (sensorId: number) => {
-    setValues(values.filter((v) => v.sensorId !== sensorId));
-    console.log("delete", sensorId);
+    setValues(values.filter(v => v.sensorId !== sensorId));
+    console.log('delete', sensorId);
   };
   const OpenCloseEditFormHandler = () => {
-    setErr("");
+    setErr('');
     setIsOpenAddForm(!isOpenAddForm);
   };
 
@@ -127,74 +125,56 @@ export function SettingsBackupPower({
 
       <div className="" onClick={() => setIsOpenModal(true)}>
         <SettingsSvg
-          title={
-            lang === "RU"
-              ? "Настройка параметров источника питания"
-              : "Setting the power supply parameters"
-          }
-          color={"#616161"}
-          size={"25"}
+          title={lang === 'RU' ? 'Настройка параметров источника питания' : 'Setting the power supply parameters'}
+          color={'#616161'}
+          size={'25'}
         />
       </div>
       <Modal active={isOpenModal} setActive={setIsOpenModal}>
-        <p className="pb-5">
-          <span className="text-lime-600 font-medium">{email}</span>
-          {lang === "RU"
-            ? ", сдесь вы можете настроить параметры отображения источника питания"
-            : ", here you can adjust the display settings of the power supply"}
-        </p>
-        <div className="flex  flex-col">
-          <div className="pr-4 pb-4">
-            {lang === "RU" ? "Существующие настройки:" : "Existing settings"}
-          </div>
+        <div className="flex flex-col">
+          {values.length !== 0 ? (
+            <div className="pb-2 text-lg text-gray-700 font-semibold">{lang === 'RU' ? 'Настройки:' : 'Settings'}</div>
+          ) : (
+            <div className="pr-4 pb-4 text-lg text-orange-700 font-semibold">{lang === 'RU' ? 'Настройки отсутствуют' : 'There are no settings'}</div>
+          )}
+
           <ul>
-            {values.length !== 0 ? (
-              values.map((val) => {
-                return (
-                  <AppliedSettingItem
-                    key={val.sensorId}
-                    lang={lang}
-                    val={val}
-                    values={values}
-                    setValues={setValues}
-                    err={err}
-                    setErr={setErr}
-                    updatedSensor={
-                      settingsSensors &&
-                      settingsSensors.find((sen) => sen.id === val.sensorId)
-                    }
-                    sensor={sensors.find((sen) => sen.id === val.sensorId)}
-                    editHandler={EditHandler}
-                    deleteHandler={DeleteHandler}
-                  />
-                );
-              })
-            ) : (
-              <div>
-                {lang === "RU"
-                  ? "настройки отсутствуют"
-                  : "there are no settings"}
-              </div>
-            )}
+            {values.map(val => {
+              return (
+                <AppliedSettingItem
+                  key={val.sensorId}
+                  lang={lang}
+                  val={val}
+                  values={values}
+                  setValues={setValues}
+                  err={err}
+                  setErr={setErr}
+                  updatedSensor={settingsSensors && settingsSensors.find(sen => sen.id === val.sensorId)}
+                  sensor={sensors.find(sen => sen.id === val.sensorId)}
+                  editHandler={EditHandler}
+                  deleteHandler={DeleteHandler}
+                  setWasChangedValue={setWasChangedValue}
+                  correctEditingValue={correctEditingValue}
+                  setCorrectEditingValue={setCorrectEditingValue}
+                />
+              );
+            })}
           </ul>
         </div>
+
         <div
           onClick={OpenCloseEditFormHandler}
-          className="flex h-10 cursor-pointer align-center items-center bg-gray-100 mt-5 pl-2"
+          className={`${
+            !isOpenAddForm && 'rounded-md'
+          } flex justify-between h-10 cursor-pointer align-center items-center rounded-t-md bg-orange-600 mt-2 pl-2`}
         >
-          <div className={"max-w-32 p-1"}>
-            {lang === "RU" ? "Добавить настройки" : "add settings"}
-          </div>
+          <div className={'max-w-32 p-1 text-base text-stone-50'}>{lang === 'RU' ? 'Добавить настройки' : 'add settings'}</div>
 
           <Image
-            className={`${
-              isOpenAddForm && "rotate-180 transition-all scale-50"
-            } w-7 h-7 transition-all scale-50`}
+            className={`${isOpenAddForm && 'rotate-180 transition-all scale-50'} w-8 h-8 text-lg font-bold transition-all scale-50`}
             src={arrowIcon}
             alt="edit"
           />
-
-          <div className="text-red-700 pl-5">{err}</div>
         </div>
 
         {isOpenAddForm && (
@@ -207,15 +187,28 @@ export function SettingsBackupPower({
             err={err}
             setErr={setErr}
             setIsOpenAddForm={setIsOpenAddForm}
+            correctVal={correctVal}
+            setCorrectVal={setCorrectVal}
           />
         )}
-        <form className={"pt-5"} onSubmit={handleSubmit(onSubmit)}>
-          <button
-            className="border-2 border-lime-500 rounded-md p-2"
-            type="submit"
-          >
-            {lang === "RU" ? "Сохранить настройки" : "Save Settings"}
-          </button>
+
+        <form className={''} onSubmit={handleSubmit(onSubmit)}>
+          {values.find(v => !v.exist || v.deleted || wasChangedValue) && (
+            <button
+              className={`relative p-2 mt-5 text-base text-stone-50 font-semibold border border-gray-700 bg-gray-700 rounded ${
+                correctVal && correctEditingValue && !isOpenAddForm ? 'hover:bg-stone-50 hover:text-gray-700' : 'opacity-30'
+              } sm:text-xs transition-all`}
+              disabled={!correctVal || !correctEditingValue || isOpenAddForm || isSavingSettings}
+              type="submit"
+            >
+              {lang === 'RU' ? 'Сохранить' : 'Save'}
+              {isSavingSettings && (
+                <div className="absolute top-1 right-1">
+                  <Loading width={'w-3.5'} height={'h-3.5'} />
+                </div>
+              )}
+            </button>
+          )}
         </form>
       </Modal>
     </div>

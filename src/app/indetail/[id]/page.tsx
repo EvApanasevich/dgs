@@ -22,8 +22,6 @@ export default async function ObjectInDetail({ params }: { params: { id: string 
   const device = await devicesApi.getDevice(params.id, session?.user.token);
   const userSettings = await getUserSettings(session?.user.id);
 
-  console.log(device);
-
   if (!device) {
     return (
       <p className="text-sm text-red-500 pt-5">

@@ -3,29 +3,47 @@
 import { updateLanguage } from '../../../lib/actions/user_settings.actions';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 type LanguagePropsType = {
-  lang: string;
+  language: string;
 };
 
-export function Language({ lang }: LanguagePropsType) {
-  //const { lang, setLang } = useContext(InteractiveContext);
+export function Language({ language }: LanguagePropsType) {
+  const [isLoadingLang, setIsLoadingLang] = useState<boolean>(false);
+
   const session = useSession();
   const router = useRouter();
 
-  const onClickHandler = (lang: string) => {
-    updateLanguage({ userId: session.data?.user.id, language: lang });
+  useEffect(() => {
+    setIsLoadingLang(false);
+  }, [language]);
+
+  const onClickHandler = async (lang: string) => {
+    setIsLoadingLang(true);
+    const result = await updateLanguage({ userId: session.data?.user.id, language: lang });
     router.refresh();
-    //setLang(lang);
   };
 
   return (
-    <div className="flex border-2 border-gray-200 rounded-xl truncate text-red-500 lg820:mb-3">
-      <button onClick={() => onClickHandler('RU')} className={`${lang !== 'RU' && 'bg-gray-200  text-gray-700'} pl-3 pr-1 font-semibold`}>
-        RU
+    <div className="flex truncate text-orange-600 lg820:mb-3">
+      <button
+        onClick={() => onClickHandler('RU')}
+        disabled={isLoadingLang || language === 'RU'}
+        className={`${language !== 'RU' && 'bg-gray-600 border border-gray-600 rounded-s text-stone-50 transition-all cursor-pointer'} ${
+          isLoadingLang && 'opacity-25'
+        } pl-2 pr-2 font-semibold`}
+      >
+        {'RU'}
       </button>
-      <button onClick={() => onClickHandler('EN')} className={`${lang !== 'EN' && 'bg-gray-200  text-gray-700'} pl-1 pr-3 font-semibold`}>
-        EN
+      <button
+        onClick={() => onClickHandler('EN')}
+        disabled={isLoadingLang || language === 'EN'}
+        className={`${language !== 'EN' && 'bg-gray-600 border border-gray-600 rounded-e text-stone-50 transition-all cursor-pointer'} ${
+          isLoadingLang && 'opacity-25'
+        } pl-2 pr-2 font-semibold`}
+      >
+        {'EN'}
       </button>
     </div>
   );

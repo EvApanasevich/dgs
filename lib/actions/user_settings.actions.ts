@@ -8,11 +8,11 @@ interface Params {
   language: string;
 }
 
-export async function updateLanguage({ userId, language }: Params): Promise<void> {
+export async function updateLanguage({ userId, language }: Params): Promise<boolean> {
   try {
     connectToDB();
 
-    await UserSettings.findOneAndUpdate(
+    const result = await UserSettings.findOneAndUpdate(
       { userId: userId },
       {
         language: language,
@@ -20,6 +20,8 @@ export async function updateLanguage({ userId, language }: Params): Promise<void
       },
       { upsert: true },
     );
+
+    return !!result;
   } catch (error: any) {
     throw new Error(`Failed: ${error.message}`);
   }
