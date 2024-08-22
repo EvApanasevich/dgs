@@ -142,6 +142,7 @@ export default async function ObjectInDetail({ params }: { params: { id: string 
               deviceId={device.id}
               sensors={sensors}
               settingsSensors={settingsForDevice?.sensors}
+              settingsId={String(settingsForDevice?._id)}
             />
           </div>
         </ViewBlock>

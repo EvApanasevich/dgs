@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Modal } from '../modal/Modal';
-import { UpdatedSensor, updateSettings } from '../../../lib/actions/settings.actions';
+import { UpdatedSensor, updateSettings, resetSettings } from '../../../lib/actions/settings.actions';
 import { useParams, useRouter } from 'next/navigation';
 import { SensorType } from '@/types/types';
 import { useForm } from 'react-hook-form';
@@ -13,23 +13,27 @@ import { SettingsSvg } from '../icons_svg/SettingsSvg';
 import { SuccessModal } from '../success_modal/SuccessModal';
 import { Loading } from '../loading/Loading';
 import { InputInSettings } from '../input_in_settings/InputInSettings';
+import { ResetSettings } from '../reset_settings/ResetSettings';
 
 type SettingsPropsType = {
   lang: string;
   email: string | undefined;
   userId: number | undefined;
   deviceId: string;
+  settingsId: string | undefined;
   sensors: SensorType[];
   settingsSensors: UpdatedSensor[] | undefined;
 };
 
-export function SettingsSensors({ lang, email, userId, deviceId, sensors, settingsSensors }: SettingsPropsType) {
+export function SettingsSensors({ lang, email, userId, deviceId, sensors, settingsSensors, settingsId }: SettingsPropsType) {
   const router = useRouter();
   const params = useParams();
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [isSavingSettings, setIsSavingSettings] = useState<boolean>(false);
+  const [isResetingSettings, setIsResetingSettings] = useState<boolean>(false);
   const [icons, setIcons] = useState<Array<{ sensorId: number; icon: number }>>(() => initIcons(settingsSensors));
-  const [saveOkModal, setSaveOkModal] = useState<boolean>(false);
+  const [isOpenSuccessModal, setIsOpenSuccessModal] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
 
   const {
     register,
@@ -56,8 +60,6 @@ export function SettingsSensors({ lang, email, userId, deviceId, sensors, settin
   }
 
   const onSubmit = async (data: any) => {
-    console.log(data);
-
     setIsSavingSettings(true);
     const arrSensors: Array<UpdatedSensor> = [];
 
@@ -86,9 +88,9 @@ export function SettingsSensors({ lang, email, userId, deviceId, sensors, settin
       setIsSavingSettings(false);
       setTimeout(() => {
         setTimeout(() => {
-          setSaveOkModal(false);
+          setIsOpenSuccessModal(false);
         }, 3000);
-        setSaveOkModal(true);
+        setIsOpenSuccessModal(true);
       }, 500);
     } else {
       setIsSavingSettings(false);
@@ -98,9 +100,39 @@ export function SettingsSensors({ lang, email, userId, deviceId, sensors, settin
     setIsOpenModal(false);
   };
 
+  const resetSettingsHandler = async () => {
+    setIsResetingSettings(true);
+
+    try {
+      const OK = await resetSettings(settingsId);
+
+      if (OK) {
+        setIsResetingSettings(false);
+        setTimeout(() => {
+          setTimeout(() => {
+            setIsOpenSuccessModal(false);
+          }, 3000);
+          setIsOpenSuccessModal(true);
+        }, 500);
+      }
+    } catch (error) {
+      setError(true);
+      setTimeout(() => {
+        setTimeout(() => {
+          setIsOpenSuccessModal(false);
+        }, 3000);
+        setIsOpenSuccessModal(true);
+      }, 500);
+    }
+
+    router.refresh();
+    setIsResetingSettings(false);
+    setIsOpenModal(false);
+  };
+
   return (
     <div className="text-sm">
-      <SuccessModal saveOkModal={saveOkModal} lang={lang} />
+      <SuccessModal error={error} isOpenSuccessModal={isOpenSuccessModal} lang={lang} />
 
       <div className="" onClick={() => setIsOpenModal(true)}>
         <SettingsSvg title={lang === 'RU' ? 'Настройки отображения датчиков' : 'Sensor display settings'} color={'#616161'} size={'25'} />
@@ -143,18 +175,29 @@ export function SettingsSensors({ lang, email, userId, deviceId, sensors, settin
             })}
           </ul>
 
-          <button
-            className={`relative p-2 mt-5 text-base text-stone-50 font-semibold border border-gray-700 bg-gray-700 rounded hover:bg-stone-50 hover:text-gray-700 sm:text-xs transition-all`}
-            disabled={isSavingSettings}
-            type="submit"
-          >
-            {lang === 'RU' ? 'Сохранить настройки' : 'Save Settings'}
-            {isSavingSettings && (
-              <div className="absolute top-1 right-1">
-                <Loading width={'w-3.5'} height={'h-3.5'} />
-              </div>
+          <div className="flex justify-between">
+            <button
+              className={`relative p-2 mt-5 text-base text-stone-50 font-semibold border border-gray-700 bg-gray-700 rounded hover:bg-stone-50 hover:text-gray-700 sm:text-xs transition-all`}
+              disabled={isSavingSettings && isResetingSettings}
+              type="submit"
+            >
+              {lang === 'RU' ? 'Сохранить настройки' : 'Save Settings'}
+              {isSavingSettings && (
+                <div className="absolute top-1 right-1">
+                  <Loading width={'w-3.5'} height={'h-3.5'} />
+                </div>
+              )}
+            </button>
+
+            {settingsId !== 'undefined' && (
+              <ResetSettings
+                resetSettingsHandler={resetSettingsHandler}
+                isSavingSettings={isSavingSettings}
+                isResetingSettings={isResetingSettings}
+                lang={lang}
+              />
             )}
-          </button>
+          </div>
         </form>
       </Modal>
     </div>

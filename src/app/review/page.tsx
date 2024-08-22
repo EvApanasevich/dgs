@@ -11,6 +11,7 @@ import { Pagination } from '@/components/pagination/Pagination';
 import { DgsItems } from '@/components/dgs_items/dgs_items';
 
 const COUNT_OBJECTS_IN_PAGE = 12;
+const COUNT_PAGES_IN_BLOCK = 5;
 
 export default async function Review({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
   const session = await getServerSession(authConfig);
@@ -32,6 +33,8 @@ export default async function Review({ searchParams }: { searchParams: { [key: s
     });
   }
 
+  const isNotFoundDevices = Boolean(searchParams.search && devicesForPage.length === 0);
+
   return (
     <div className="flex flex-col">
       <div className="flex justify-between pt-8 pb-6 md:flex-col-reverse md:items-end border-b border-gray-500">
@@ -41,8 +44,20 @@ export default async function Review({ searchParams }: { searchParams: { [key: s
         </div>
         <NavProfile lang={userSettings.language} />
       </div>
-      <Pagination countDevices={filteredDevices?.length} countObjectsInPage={COUNT_OBJECTS_IN_PAGE} />
-      <DgsItems devices={devices} devicesForPage={devicesForPage} language={userSettings.language} />
+      <Pagination
+        countDevices={filteredDevices?.length}
+        countObjectsInPage={COUNT_OBJECTS_IN_PAGE}
+        countPagesInBlock={COUNT_PAGES_IN_BLOCK}
+        isNotFoundDevices={isNotFoundDevices}
+      />
+
+      {isNotFoundDevices ? (
+        <div className="pt-10 text-gray-700 font-medium text-center">
+          {userSettings.language === 'RU' ? 'По вашему запросу ничего не найдено...' : 'Nothing was found for your request...'}
+        </div>
+      ) : (
+        <DgsItems devices={devices} devicesForPage={devicesForPage} language={userSettings.language} />
+      )}
     </div>
   );
 }

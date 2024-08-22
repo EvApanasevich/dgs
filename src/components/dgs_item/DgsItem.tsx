@@ -30,7 +30,7 @@ export async function DgsItem({ lang, deviceId, deviceName, time }: DgsItemProps
       style={{
         borderColor: getStatusByPowerSupply(backuppowerSettings?.backuppowerSettings, sensors, 'hex'),
       }}
-      className={'relative flex flex-col w-full border-2 rounded-xl border-gray-300 bg-stone-50 hover:shadow-xl transition-all'}
+      className={'relative flex flex-col w-full border-2 rounded-xl border-gray-300 bg-stone-50 hover:shadow-lg transition-all'}
     >
       <span className="absolute font-medium text-xs -top-2 px-2 leading-tight left-8 inline-block bg-stone-50">
         {deviceName ? deviceName : 'no_name'}:

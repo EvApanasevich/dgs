@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 import { FieldErrors, UseFormRegister } from 'react-hook-form';
 import Image from 'next/image';
