@@ -42,7 +42,8 @@ export function SettingsPower({ lang, email, userId, deviceId, sensors, settings
   const [correctVal, setCorrectVal] = useState<boolean>(true);
   const [correctEditingValue, setCorrectEditingValue] = useState<boolean>(true);
   const [err, setErr] = useState<string>('');
-  const [saveOkModal, setSaveOkModal] = useState<boolean>(false);
+  const [isOpenSuccessModal, setIsOpenSuccessModal] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
   const [wasChangedValue, setWasChangedValue] = useState<boolean>(false);
 
   useEffect(() => {
@@ -82,9 +83,9 @@ export function SettingsPower({ lang, email, userId, deviceId, sensors, settings
         setValue: v.setValue,
       }));
 
-    if (values.length) {
-      setIsSavingSettings(true);
+    setIsSavingSettings(true);
 
+    try {
       const OK = await setPowerSettings({
         userId: userId,
         deviceId: deviceId,
@@ -95,16 +96,23 @@ export function SettingsPower({ lang, email, userId, deviceId, sensors, settings
         setIsSavingSettings(false);
         setTimeout(() => {
           setTimeout(() => {
-            setSaveOkModal(false);
+            setIsOpenSuccessModal(false);
           }, 3000);
-          setSaveOkModal(true);
+          setIsOpenSuccessModal(true);
         }, 500);
-      } else {
-        setIsSavingSettings(false);
       }
+    } catch (error) {
+      setError(true);
+      setTimeout(() => {
+        setTimeout(() => {
+          setIsOpenSuccessModal(false);
+        }, 3000);
+        setIsOpenSuccessModal(true);
+      }, 500);
     }
 
     router.refresh();
+    setIsSavingSettings(false);
     setIsOpenModal(false);
     setIsOpenAddForm(false);
     setWasChangedValue(false);
@@ -124,7 +132,7 @@ export function SettingsPower({ lang, email, userId, deviceId, sensors, settings
 
   return (
     <div className="text-sm">
-      <SuccessModal saveOkModal={saveOkModal} lang={lang} />
+      <SuccessModal error={error} isOpenSuccessModal={isOpenSuccessModal} lang={lang} />
 
       <div className="" onClick={() => setIsOpenModal(true)}>
         <SettingsSvg

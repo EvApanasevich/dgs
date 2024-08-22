@@ -1,8 +1,8 @@
-"use server";
+'use server';
 
-import PowerSettings from "../models/power_settings";
-import Settings from "../models/settings.model";
-import { connectToDB } from "../mongoose";
+import PowerSettings from '../models/power_settings';
+import Settings from '../models/settings.model';
+import { connectToDB } from '../mongoose';
 
 export interface PowerSetting {
   sensorId: number;
@@ -16,11 +16,7 @@ interface Params {
   powerSettings: Array<PowerSetting>;
 }
 
-export async function setPowerSettings({
-  userId,
-  deviceId,
-  powerSettings,
-}: Params): Promise<boolean> {
+export async function setPowerSettings({ userId, deviceId, powerSettings }: Params): Promise<boolean> {
   try {
     connectToDB();
 
@@ -31,8 +27,9 @@ export async function setPowerSettings({
         powerSettings: powerSettings,
         date: Date.now(),
       },
-      { upsert: true }
+      { upsert: true, new: true },
     );
+
     return !!result;
   } catch (error: any) {
     throw new Error(`Failed: ${error.message}`);

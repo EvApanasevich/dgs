@@ -1,7 +1,7 @@
-"use server";
+'use server';
 
-import BackuppowerSettings from "../models/backuppower_settings.model";
-import { connectToDB } from "../mongoose";
+import BackuppowerSettings from '../models/backuppower_settings.model';
+import { connectToDB } from '../mongoose';
 
 export interface BackupPowerSetting {
   sensorId: number;
@@ -15,11 +15,7 @@ interface Params {
   backuppowerSettings: Array<BackupPowerSetting>;
 }
 
-export async function setBackupPowerSettings({
-  userId,
-  deviceId,
-  backuppowerSettings,
-}: Params): Promise<boolean> {
+export async function setBackupPowerSettings({ userId, deviceId, backuppowerSettings }: Params): Promise<boolean> {
   try {
     connectToDB();
 
@@ -30,8 +26,9 @@ export async function setBackupPowerSettings({
         backuppowerSettings: backuppowerSettings,
         date: Date.now(),
       },
-      { upsert: true }
+      { upsert: true, new: true },
     );
+
     return !!result;
   } catch (error: any) {
     throw new Error(`Failed: ${error.message}`);
